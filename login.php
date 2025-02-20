@@ -31,12 +31,12 @@ require_once("sidebar.php");
     </h1>
     <?= $error ?>
     <form method="POST">
-        <label for="username">Username:</label>
+        <label for="username">Nazwa użytkownika:</label>
         <input type="text" id="username" name="username" required>
         <br>
-        <label for="password">Password:</label>
+        <label for="password">Hasło:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <input type="submit" value="Login">
+        <input type="submit" value="Zaloguj się">
     </form>
 </main>
