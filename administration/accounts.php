@@ -61,7 +61,7 @@ require_once("../sidebar.php");
         <tbody>
             <?php
             require("../db.php");
-            $stmt = $db->query("select * from users");
+            $stmt = $db->query("select * from users order by last_name, first_name");
             while ($row = $stmt->fetch()):
             ?>
                 <tr>
