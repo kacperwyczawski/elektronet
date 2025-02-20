@@ -88,7 +88,7 @@ require_once("../sidebar.php");
                     <td>
                         <form method="post" class="inline">
                             <input type="hidden" name="id" value="<?= $row['user_id'] ?>">
-                            <button type="submit" name="delete">Usuń</button>
+                            <input type="submit" name="delete" value="Usuń"/>
                         </form>
                     </td>
                 </tr>
