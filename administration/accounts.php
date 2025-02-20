@@ -32,20 +32,20 @@ require_once("../sidebar.php");
     </h1>
     <form method="post">
         <label for="first_name">Imię:</label>
-        <input type="text" id="first_name" name="first_name" required><br>
+        <input type="text" id="first_name" name="first_name" required>
         <label for="last_name">Nazwisko:</label>
-        <input type="text" id="last_name" name="last_name" required><br>
+        <input type="text" id="last_name" name="last_name" required>
         <label for="username">Nazwa użytkownika:</label>
-        <input type="text" id="username" name="username" required><br>
+        <input type="text" id="username" name="username" required>
         <label for="password">Hasło:</label>
-        <input type="password" id="password" name="password" required><br>
+        <input type="password" id="password" name="password" required>
         <label for="role">Rola:</label>
         <select id="role" name="role" required>
             <option value="employee">Pracownik</option>
             <option value="supervisor">Kierownik</option>
             <option value="executor">Wykonawca</option>
             <option value="director">Dyrektor</option>
-        </select><br>
+        </select>
         <button type="submit" name="submit">Dodaj pracownika</button>
     </form>
     <h1>Pracownicy</h1>
