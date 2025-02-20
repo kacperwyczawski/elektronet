@@ -28,7 +28,7 @@ aside {
     border-right: 1px solid var(--gray);
     display: flex;
     flex-direction: column;
-    
+
     .logo {
         padding: 1.5rem 0.5rem;
         text-decoration: none;
@@ -143,7 +143,10 @@ form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+
+    &:not(.inline) {
+        margin-bottom: 2rem;
+    }
 
     label {
         font-weight: bold;

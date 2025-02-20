@@ -7,21 +7,26 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'director') {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
-
-    require("../db.php");
-    $stmt = $db->prepare("insert into users (
-        first_name,
-        last_name,
-        username,
-        password,
-        role
-    ) values (?, ?, ?, ?, ?)");
-    $stmt->execute([$first_name, $last_name, $username, password_hash($password, PASSWORD_DEFAULT), $role]);
+    require "../db.php";
+    if (isset($_POST['delete'])) {
+        $stmt = $db->prepare("delete from users where user_id = ?");
+        $stmt->execute([$_POST['id']]);
+    } elseif (isset($_POST['submit'])) {
+        $stmt = $db->prepare("insert into users (
+            first_name,
+            last_name,
+            username,
+            password,
+            role
+        ) values (?, ?, ?, ?, ?)");
+        $stmt->execute([
+            $_POST['first_name'],
+            $_POST['last_name'],
+            $_POST['username'],
+            password_hash($_POST['password'], PASSWORD_DEFAULT),
+            $_POST['role']
+        ]);
+    }
 }
 
 require_once("../sidebar.php");
@@ -66,6 +71,7 @@ require_once("../sidebar.php");
                 <th>Nazwisko</th>
                 <th>Nazwa użytkownika</th>
                 <th>Rola</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -79,6 +85,12 @@ require_once("../sidebar.php");
                     <td><?= $row['last_name'] ?></td>
                     <td><?= $row['username'] ?></td>
                     <td><?= $row['role'] ?></td>
+                    <td>
+                        <form method="post" class="inline">
+                            <input type="hidden" name="id" value="<?= $row['user_id'] ?>">
+                            <button type="submit" name="delete">Usuń</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
