@@ -16,12 +16,13 @@ require "../sidebar.php";
                 <th>Sala</th>
                 <th>Opis</th>
                 <th>Priorytet</th>
+                <th>Wykonawca</th>
             </tr>
         </thead>
         <tbody>
             <?php
             require "../db.php";
-            $stmt = $db->prepare("select room, description, priority from issues");
+            $stmt = $db->prepare("select room, description, priority, first_name, last_name from issues natural join users");
             $stmt->execute();
             foreach ($stmt as $row):
             ?>
@@ -29,6 +30,7 @@ require "../sidebar.php";
                 <td><?= $row["room"] ?></td>
                 <td><?= $row["description"] ?></td>
                 <td><?= $row["priority"] ?></td>
+                <td><?= $row["first_name"] ?> <?= $row["last_name"] ?></td>
             </tr>
             <?php
             endforeach;
