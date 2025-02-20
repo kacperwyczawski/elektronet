@@ -10,34 +10,33 @@ require_once("../sidebar.php");
 ?>
 <main>
     <h1>
-        Zmień hasło
+        Zmień hasło do swojego konta
     </h1>
+    <p>
+        Hasło powinno składać się z co najmniej 12 znaków.
+    </p>
+    <form method="post">
+        <label for="password">Nowe hasło:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="confirm_password">Powtórz nowe hasło:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <button type="submit" name="submit">Zmień hasło</button>
+    </form>
     <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password = $_POST['password'];
         $confirm_password = $_POST['confirm_password'];
 
         if ($password !== $confirm_password) {
-            echo "<p>Podane hasła nie są takie same.</p>";
+            echo "<p class='error'>Podane hasła nie są takie same.</p>";
+        } elseif (strlen($password) < 12) {
+            echo "<p class='error'>Podane hasło jest za krótkie.</p>";
         } else {
             require("../db.php");
             $stmt = $db->prepare("update users set password = ? where username = ?");
             $stmt->execute([password_hash($password, PASSWORD_DEFAULT), $_SESSION['username']]);
-            echo "<p>Hasło zostało zmienione.</p>";
+            echo "<p  class='success'>Hasło zostało zmienione.</p>";
         }
     }
     ?>
-    <form method="post">
-        <label>
-            Nowe hasło:
-            <input type="password" name="password" required>
-        </label>
-        <br>
-        <label>
-            Powtórz nowe hasło:
-            <input type="password" name="confirm_password" required>
-        </label>
-        <br>
-        <button type="submit" name="submit">Zmień hasło</button>
-    </form>
 </main>
