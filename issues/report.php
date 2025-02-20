@@ -21,10 +21,8 @@ require "../sidebar.php";
     <form method="post">
         <label for="room">Sala:</label>
         <input type="text" name="room" id="room" required>
-        <br>
         <label for="description">Opis:</label>
-        <textarea name="description" id="description" required></textarea>
-        <br>
+        <textarea name="description" id="description" rows="10" required></textarea>
         <button type="submit">Zgłoś problem</button>
     </form>
 </main>

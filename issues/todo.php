@@ -12,9 +12,9 @@ require "../sidebar.php";
     <h1>Twoje zgłoszenia</h1>
     <table>
         <tr>
+            <th>Priorytet</th>
             <th>Sala</th>
             <th>Opis</th>
-            <th>Priorytet</th>
         </tr>
         <?php
         require "../db.php";
@@ -23,9 +23,9 @@ require "../sidebar.php";
         foreach ($stmt as $row):
         ?>
             <tr>
+                <td><?= $row["priority"] ?></td>
                 <td><?= $row["room"] ?></td>
                 <td><?= $row["description"] ?></td>
-                <td><?= $row["priority"] ?></td>
             </tr>
         <?php
         endforeach;

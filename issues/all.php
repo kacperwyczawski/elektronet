@@ -12,10 +12,10 @@ require "../sidebar.php";
     <h1>Wszystkie zgłoszenia</h1>
     <table>
         <tr>
-            <th>Sala</th>
-            <th>Opis</th>
             <th>Priorytet</th>
             <th>Wykonawca</th>
+            <th>Sala</th>
+            <th>Opis</th>
         </tr>
         <?php
         require "../db.php";
@@ -24,10 +24,10 @@ require "../sidebar.php";
         foreach ($stmt as $row):
         ?>
             <tr>
-                <td><?= $row["room"] ?></td>
-                <td><?= $row["description"] ?></td>
                 <td><?= $row["priority"] ?></td>
                 <td><?= $row["first_name"] ?> <?= $row["last_name"] ?></td>
+                <td><?= $row["room"] ?></td>
+                <td><?= $row["description"] ?></td>
             </tr>
         <?php
         endforeach;

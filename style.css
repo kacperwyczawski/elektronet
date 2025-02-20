@@ -39,15 +39,15 @@ aside {
         justify-content: center;
     }
 
-    & > nav {
+    &>nav {
         flex: 1;
         padding: 1rem 0;
         overflow-y: auto;
 
-        & > div {
+        &>div {
             margin-bottom: 1rem;
 
-            & > h2 {
+            &>h2 {
                 padding: 0.5rem 1.5rem;
                 color: #333333;
                 font-size: 0.875rem;
@@ -55,7 +55,7 @@ aside {
                 text-transform: uppercase;
             }
 
-            & > ul {
+            &>ul {
                 list-style: none;
 
                 & a {
@@ -133,4 +133,43 @@ table {
         padding: 0.75rem 1rem;
         border-bottom: 1px solid var(--gray);
     }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+    }
+
+    input,
+    textarea {
+        padding: 0.5rem;
+        border: 1px solid var(--gray);
+        border-radius: 4px;
+        font-size: 1rem;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    button,
+    input[type="submit"] {
+        padding: 0.5rem 1rem;
+        background-color: var(--blue);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        align-self: flex-start;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--blue) 80%, black);
+        }
+    }
+
+
 }
