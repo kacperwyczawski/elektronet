@@ -1,10 +1,13 @@
 <?php
 session_start();
-require_once('components/top.php');
+require_once('sidebar.php');
 ?>
-<?php if (isset($_SESSION["username"])): ?>
-    <h2>Witaj, <?= $_SESSION["first_name"] ?>!</h2>
-<?php else: ?>
-    <a href="login.php">Zaloguj się</a>. Nie masz konta? Poproś dyrekcję o rejestrację.
-<?php endif; ?>
-<?php require_once('components/bottom.php'); ?>
+<main>
+    <?php if (isset($_SESSION["username"])): ?>
+        <h1>Dzień dobry, <?= $_SESSION["first_name"] ?>!</h1>
+    <?php else: ?>
+        <h1>
+            Witaj! <a href="/login.php">Zaloguj się</a>.
+        </h1>
+    <?php endif; ?>
+</main>

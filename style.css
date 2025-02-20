@@ -5,46 +5,86 @@
     --gray: #eeeeee;
 }
 
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+
+aside {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid var(--gray);
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
-}
+    position: fixed;
+    height: 100vh;
 
-header {
-    background-color: var(--red);
-    color: white;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    & .logo {
+        padding: 1.5rem;
+        text-decoration: none;
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        background-color: var(--red);
+    }
 
-.logo {
-    font-weight: bold;
-}
+    & > nav {
+        flex: 1;
+        padding: 1rem 0;
+        overflow-y: auto;
 
-nav {
-    display: flex;
-    gap: 1rem;
-}
+        & > div {
+            margin-bottom: 1rem;
 
-nav a {
-    color: white;
-    text-decoration: none;
+            & > h2 {
+                padding: 0.5rem 1.5rem;
+                color: #333333;
+                font-size: 0.875rem;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            & > ul {
+                list-style: none;
+
+                & a {
+                    display: block;
+                    padding: 0.5rem 2rem;
+                    color: #4a4a4a;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background-color: var(--gray);
+                        color: var(--blue);
+                    }
+                }
+            }
+        }
+    }
+
+    & footer {
+        padding: 1rem 1.5rem;
+        background-color: var(--red);
+        color: white;
+        font-size: 0.9rem;
+    }
 }
 
 main {
-    flex-grow: 1;
+    margin-left: 250px;
     padding: 2rem;
-}
+    flex: 1;
 
-footer {
-    background-color: #f0f0f0;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.8rem;
+    & h1 {
+        margin-bottom: 2rem;
+    }
 }
