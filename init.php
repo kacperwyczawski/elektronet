@@ -19,7 +19,7 @@ $db->exec("insert into users (
     'Wyczawski',
     'kwyczawski',
     '" . password_hash('admin', PASSWORD_DEFAULT) . "',
-    'dyrector'
+    'dyrektor'
 )");
 $db->exec("create table issues (
     issue_id integer primary key,

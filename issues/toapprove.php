@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "kierownik" && $_SESSION["role"] !== "dyrector")) {
+if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "kierownik" && $_SESSION["role"] !== "dyrektor")) {
     header("Location: /denied.php");
     exit();
 }
