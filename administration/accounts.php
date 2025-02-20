@@ -103,9 +103,7 @@ require_once("../sidebar.php");
     const username = document.getElementById("username")
 
     function generateUsername() {
-        let s = ""
-        s += firstName.value[0] ?? ""
-        s += lastName.value.split("-")[0]
+        let s = firstName.value.slice(0, 3) + lastName.value.slice(0, 3)
         username.value = s
             .toLowerCase()
             .replace("ą", "a")
