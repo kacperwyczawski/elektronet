@@ -20,6 +20,8 @@
                     <span class="chip green">Wykonawca</span>
                 <?php elseif ($_SESSION['role'] == 'supervisor'): ?>
                     <span class="chip green">Kierownik</span>
+                <?php elseif ($_SESSION['role'] == 'employee'): ?>
+                    <span class="chip green">Pracownik</span>
                 <?php endif; ?>
             <?php else: ?>
                 <span>Elektronet</span>
