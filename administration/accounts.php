@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'director') {
-    header('Location: /');
+    header('Location: /denied.php');
     exit();
 }
 
