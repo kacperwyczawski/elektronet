@@ -29,7 +29,8 @@
                 <h2>Zgłoszenia</h2>
                 <ul>
                     <li><a href="/issues/report.php">Zgłoś probelm</a></li>
-                    <li><a href="/issues/yourissues.php">Twoje zgłoszenia</a></li>
+                    <li><a href="/issues/your.php">Twoje zgłoszenia</a></li>
+                    <li><a href="/issues/all.php">Wszystkie zgłoszenia</a></li>
                     <li><a href="/issues/toapprove.php">Do zatwierdzenia</a></li>
                     <li><a href="/issues/todo.php">Do wykonania</a></li>
                 </ul>

@@ -21,11 +21,11 @@ $db->exec("insert into users (
     '" . password_hash('admin', PASSWORD_DEFAULT) . "',
     'director'
 )");
-$db->exec("create table errands (
-    errand_id integer primary key,
+$db->exec("create table issues (
+    issue_id integer primary key,
     user_id integer not null,
     room text not null,
     description text not null,
-    status text not null,
+    priority text,
     foreign key (user_id) references users(user_id)
 )");
