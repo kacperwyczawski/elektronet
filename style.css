@@ -208,3 +208,7 @@ form {
         }
     }
 }
+
+a {
+    color: inherit;
+}

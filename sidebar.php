@@ -53,6 +53,6 @@
         <footer>
             &copy; <?= date('Y') ?> ZSE Rzeszów
             <br>
-            Wykonał Kacper Wyczawski
+            Wykonał <a href="https://wyczawski.dev">Kacper Wyczawski</a>
         </footer>
     </aside>
