@@ -33,7 +33,7 @@ require "../sidebar.php";
                             echo "Wysoki";
                             break;
                         case 1:
-                            echo "Średni";
+                            echo "Normalny";
                             break;
                         case 2:
                             echo "Niski";
