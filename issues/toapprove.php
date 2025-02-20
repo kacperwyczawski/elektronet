@@ -9,8 +9,8 @@ if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "kierownik" && $_SESS
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require "../db.php";
     if (isset($_POST["approve"])) {
-        $stmt = $db->prepare("update issues set priority = ?, user_id = ? where issue_id = ?");
-        $stmt->execute([$_POST["priority"], $_POST["user_id"], $_POST["id"]]);
+        $stmt = $db->prepare("update issues set priority = ?, assigned_to_id = ? where issue_id = ?");
+        $stmt->execute([$_POST["priority"], $_POST["assigned_to_id"], $_POST["id"]]);
     } elseif (isset($_POST["reject"])) {
         $stmt = $db->prepare("delete from issues where issue_id = ?");
         $stmt->execute([$_POST["id"]]);
@@ -53,9 +53,9 @@ require "../sidebar.php";
                                 <option value="1" selected>Normalny</option>
                                 <option value="2">Niski</option>
                             </select>
-                            <select name="user_id" required>
+                            <select name="assigned_to_id" required>
                                 <?php
-                                $stmt = $db->prepare("select user_id, first_name, last_name from users where role = 'wykonawca'");
+                                $stmt = $db->prepare("select * from users where role = 'wykonawca'");
                                 $stmt->execute();
                                 foreach ($stmt as $row2):
                                 ?>

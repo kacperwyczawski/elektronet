@@ -26,18 +26,12 @@ require "../sidebar.php";
             <tr>
                 <td>
                     <?php
-                    switch ($row["priority"]) {
-                        case null:
-                            break;
-                        case 0:
-                            echo "Wysoki";
-                            break;
-                        case 1:
-                            echo "Normalny";
-                            break;
-                        case 2:
-                            echo "Niski";
-                            break;
+                    if ($row["priority"] === 0) {
+                        echo "Wysoki";
+                    } elseif ($row["priority"] === 1) {
+                        echo "Normalny";
+                    } elseif ($row["priority"] === 2) {
+                        echo "Niski";
                     }
                     ?>
                 </td>

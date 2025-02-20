@@ -23,9 +23,11 @@ $db->exec("insert into users (
 )");
 $db->exec("create table issues (
     issue_id integer primary key,
-    user_id integer,
+    raised_by_id integer not null,
+    assigned_to_id integer,
     room text not null,
     description text not null,
     priority integer,
-    foreign key (user_id) references users(user_id)
+    foreign key (raised_by_id) references users(user_id),
+    foreign key (assigned_to_id) references users(user_id)
 )");

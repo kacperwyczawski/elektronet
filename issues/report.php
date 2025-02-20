@@ -8,8 +8,8 @@ if (!isset($_SESSION["user_id"])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require "../db.php";
-    $stmt = $db->prepare("insert into issues (room, description) values (?, ?)");
-    $stmt->execute([ $_POST["room"], $_POST["description"]]);
+    $stmt = $db->prepare("insert into issues (room, description, raised_by_id) values (?, ?, ?)");
+    $stmt->execute([ $_POST["room"], $_POST["description"], $_SESSION["user_id"] ]);
     header("Location: /issues/your.php");
     exit();
 }

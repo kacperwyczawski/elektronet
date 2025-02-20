@@ -18,25 +18,19 @@ require "../sidebar.php";
         </tr>
         <?php
         require "../db.php";
-        $stmt = $db->prepare("select room, description, priority from issues where user_id = ?");
+        $stmt = $db->prepare("select * from issues where raised_by_id = ?");
         $stmt->execute([$_SESSION["user_id"]]);
         foreach ($stmt as $row):
         ?>
             <tr>
                 <td>
                     <?php
-                    switch ($row["priority"]) {
-                        case null:
-                            break;
-                        case 0:
-                            echo "Wysoki";
-                            break;
-                        case 1:
-                            echo "Normalny";
-                            break;
-                        case 2:
-                            echo "Niski";
-                            break;
+                    if ($row["priority"] === 0) {
+                        echo "Wysoki";
+                    } elseif ($row["priority"] === 1) {
+                        echo "Normalny";
+                    } elseif ($row["priority"] === 2) {
+                        echo "Niski";
                     }
                     ?>
                 </td>
