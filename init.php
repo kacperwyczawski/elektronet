@@ -23,7 +23,7 @@ $db->exec("insert into users (
 )");
 $db->exec("create table issues (
     issue_id integer primary key,
-    user_id integer not null,
+    user_id integer,
     room text not null,
     description text not null,
     priority integer,
