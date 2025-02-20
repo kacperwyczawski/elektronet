@@ -1,14 +1,21 @@
+:root {
+    --red: #d4293d;
+    --blue: #5992ca;
+    --green: #22bb6e;
+    --gray: #eeeeee;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 header {
-    background-color: #d4293d;
+    background-color: var(--red);
     color: white;
     padding: 1rem;
     display: flex;
@@ -32,9 +39,6 @@ nav a {
 
 main {
     flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 2rem;
 }
 
