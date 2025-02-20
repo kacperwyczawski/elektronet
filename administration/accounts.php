@@ -38,7 +38,17 @@ require_once("../sidebar.php");
         <label for="username">Nazwa użytkownika:</label>
         <input type="text" id="username" name="username" required>
         <label for="password">Hasło:</label>
-        <input type="password" id="password" name="password" required>
+        <div class="password">
+            <input type="text" id="password" name="password" required>
+            <button type="button">Generuj hasło</button>
+            <script type="module">
+                document.querySelector(".password button").addEventListener("click", () => {
+                    const password = Math.random().toString(36).slice(2, 10).toUpperCase()
+                    document.getElementById("password").value = password
+                })
+            </script>
+        </div>
+        </script>
         <label for="role">Rola:</label>
         <select id="role" name="role" required>
             <option value="employee">Pracownik</option>

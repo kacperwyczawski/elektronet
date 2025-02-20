@@ -55,6 +55,3 @@
             Wykonał Kacper Wyczawski
         </footer>
     </aside>
-</body>
-
-</html>
