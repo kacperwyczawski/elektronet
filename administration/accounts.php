@@ -76,12 +76,14 @@ require_once("../sidebar.php");
 </main>
 
 <script type="module">
-    const firstName = document.getElementById("first_name");
-    const lastName = document.getElementById("last_name");
-    const username = document.getElementById("username");
+    const firstName = document.getElementById("first_name")
+    const lastName = document.getElementById("last_name")
+    const username = document.getElementById("username")
 
     function generateUsername() {
-        let s = (firstName.value[0] ?? "") + lastName.value;
+        let s = ""
+        s += firstName.value[0] ?? ""
+        s += lastName.value.split("-")[0]
         username.value = s
             .toLowerCase()
             .replace("ą", "a")
@@ -93,9 +95,9 @@ require_once("../sidebar.php");
             .replace("ś", "s")
             .replace("ż", "z")
             .replace("ź", "z")
-            .replace(/[^a-z]/g, "");
+            .replace(/[^a-z]/g, "")
     }
 
-    firstName.addEventListener("input", generateUsername);
-    lastName.addEventListener("input", generateUsername);
+    firstName.addEventListener("input", generateUsername)
+    lastName.addEventListener("input", generateUsername)
 </script>
