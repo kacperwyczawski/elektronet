@@ -10,11 +10,20 @@
 
 <body>
     <aside>
-        <?php if(isset($_SESSION['username'])): ?>
-            <span class="logo">@<?= $_SESSION['username'] ?></span>
-        <?php else: ?>
-            <span class="logo">Elektronet</span>
-        <?php endif; ?>
+        <div class="logo">
+            <?php if (isset($_SESSION['username'])): ?>
+                <span><?= $_SESSION['username'] ?></span>
+                <?php if ($_SESSION['role'] == 'director'): ?>
+                    <span class="chip green">Dyrektor</span>
+                <?php elseif ($_SESSION['role'] == 'executor'): ?>
+                    <span class="chip green">Wykonawca</span>
+                <?php elseif ($_SESSION['role'] == 'supervisor'): ?>
+                    <span class="chip green">Kierownik</span>
+                <?php endif; ?>
+            <?php else: ?>
+                <span>Elektronet</span>
+            <?php endif; ?>
+        </div>
         <nav>
             <div>
                 <h2>Zgłoszenia</h2>
