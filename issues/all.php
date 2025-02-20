@@ -19,12 +19,28 @@ require "../sidebar.php";
         </tr>
         <?php
         require "../db.php";
-        $stmt = $db->prepare("select room, description, priority, first_name, last_name from issues natural join users");
+        $stmt = $db->prepare("select room, description, priority, first_name, last_name from issues natural join users order by priority");
         $stmt->execute();
         foreach ($stmt as $row):
         ?>
             <tr>
-                <td><?= $row["priority"] ?></td>
+                <td>
+                    <?php
+                    switch ($row["priority"]) {
+                        case null:
+                            break;
+                        case 0:
+                            echo "Wysoki";
+                            break;
+                        case 1:
+                            echo "Średni";
+                            break;
+                        case 2:
+                            echo "Niski";
+                            break;
+                    }
+                    ?>
+                </td>
                 <td><?= $row["first_name"] ?> <?= $row["last_name"] ?></td>
                 <td><?= $row["room"] ?></td>
                 <td><?= $row["description"] ?></td>

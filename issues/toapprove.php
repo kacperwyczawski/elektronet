@@ -23,13 +23,13 @@ require "../sidebar.php";
     <h1>Zgłoszenia do zatwierdzenia</h1>
     <?php
     require "../db.php";
-    $stmt = $db->prepare("select issue_id, room, description from issues where priority is null");
+    $stmt = $db->prepare("select issue_id, room, description from issues where priority is null order by priority");
     $stmt->execute();
     $result = $stmt->fetchAll();
     if (!$result):
     ?>
         <p>
-            No i fajrant, brak zgłoszeń do zatwierdzenia.
+            Brak zgłoszeń do zatwierdzenia.
         </p>
     <?php else: ?>
         <table>
@@ -49,9 +49,9 @@ require "../sidebar.php";
                     <td colspan="3">
                         <form method="post">
                             <select name="priority" required>
-                                <option value="high">Wysoki</option>
-                                <option value="normal" selected>Normalny</option>
-                                <option value="low">Niski</option>
+                                <option value="0">Wysoki</option>
+                                <option value="1" selected>Normalny</option>
+                                <option value="2">Niski</option>
                             </select>
                             <select name="user_id" required>
                                 <?php

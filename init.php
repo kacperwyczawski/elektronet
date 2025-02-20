@@ -26,6 +26,6 @@ $db->exec("create table issues (
     user_id integer not null,
     room text not null,
     description text not null,
-    priority text,
+    priority integer,
     foreign key (user_id) references users(user_id)
 )");
