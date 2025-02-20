@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elektronet</title>
     <link rel="stylesheet" href="/style.css">
+    <meta name="theme-color" content="#d4293d" />
 </head>
 
 <body>

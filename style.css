@@ -11,6 +11,11 @@
     box-sizing: border-box;
 }
 
+::selection {
+    background-color: var(--blue);
+    color: white;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
