@@ -15,9 +15,9 @@ $db->exec("insert into users (
     password,
     role
 ) values (
-    'Admin',
-    'Admin',
-    'admin',
+    'Kacper',
+    'Wyczawski',
+    'kwyczawski',
     '" . password_hash('admin', PASSWORD_DEFAULT) . "',
     'director'
 )");
