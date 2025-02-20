@@ -14,15 +14,7 @@
         <div class="logo">
             <?php if (isset($_SESSION['username'])): ?>
                 <span><?= $_SESSION['username'] ?></span>
-                <?php if ($_SESSION['role'] == 'director'): ?>
-                    <span class="chip green">Dyrektor</span>
-                <?php elseif ($_SESSION['role'] == 'executor'): ?>
-                    <span class="chip green">Wykonawca</span>
-                <?php elseif ($_SESSION['role'] == 'supervisor'): ?>
-                    <span class="chip green">Kierownik</span>
-                <?php elseif ($_SESSION['role'] == 'employee'): ?>
-                    <span class="chip green">Pracownik</span>
-                <?php endif; ?>
+                <span class="chip green"><?= $_SESSION["role"] ?></span>
             <?php else: ?>
                 <span>Elektronet</span>
             <?php endif; ?>

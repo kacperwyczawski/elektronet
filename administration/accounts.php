@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'director') {
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'dyrektor') {
     header('Location: /denied.php');
     exit();
 }
@@ -56,10 +56,10 @@ require_once("../sidebar.php");
         </script>
         <label for="role">Rola:</label>
         <select id="role" name="role" required>
-            <option value="employee">Pracownik</option>
-            <option value="supervisor">Kierownik</option>
-            <option value="executor">Wykonawca</option>
-            <option value="director">Dyrektor</option>
+            <option value="pracownik">Pracownik</option>
+            <option value="kierownik">Kierownik</option>
+            <option value="wykonawca">Wykonawca</option>
+            <option value="dyrektor">Dyrektor</option>
         </select>
         <button type="submit" name="submit">Dodaj pracownika</button>
     </form>

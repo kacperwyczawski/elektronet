@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "supervisor" && $_SESSION["role"] !== "director")) {
+if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "kierownik" && $_SESSION["role"] !== "dyrector")) {
     header("Location: /denied.php");
     exit();
 }
@@ -55,7 +55,7 @@ require "../sidebar.php";
                             </select>
                             <select name="user_id" required>
                                 <?php
-                                $stmt = $db->prepare("select user_id, first_name, last_name from users where role = 'executor'");
+                                $stmt = $db->prepare("select user_id, first_name, last_name from users where role = 'wykonawca'");
                                 $stmt->execute();
                                 foreach ($stmt as $row2):
                                 ?>
