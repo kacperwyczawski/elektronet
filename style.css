@@ -221,3 +221,8 @@ p {
         color: var(--green);
     }
 }
+
+h1.index {
+    margin-top: 8rem;
+    text-align: center;
+}
