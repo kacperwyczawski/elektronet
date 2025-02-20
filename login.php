@@ -1,10 +1,11 @@
 <?php
 session_start();
-$db = new PDO("sqlite:elektronet.db");
+$error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
+    require("db.php");
     $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $row = $stmt->fetch();
@@ -17,22 +18,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["first_name"] = $row["first_name"];
         $_SESSION["username"] = $username;
         $_SESSION["role"] = $row["role"];
-        header("Location: index.php");
+        header("Location: /");
     }
 }
-require_once("components/top.php");
+require_once("sidebar.php");
 ?>
-<h2>Login</h2>
-<?php if (!empty($error)): ?>
-    <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
-<?php endif; ?>
-<form method="POST" action="">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <input type="submit" value="Login">
-</form>
-<?php require_once("components/bottom.php"); ?>
+
+
+<main>
+    <h1>
+        Zaloguj się
+    </h1>
+    <?= $error ?>
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+</main>
