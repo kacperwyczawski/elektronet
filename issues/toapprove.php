@@ -9,7 +9,7 @@ if (!isset($_SESSION["user_id"]) || ($_SESSION["role"] !== "kierownik" && $_SESS
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require "../db.php";
     if (isset($_POST["approve"])) {
-        $stmt = $db->prepare("update issues set priority = ?, assigned_to_id = ? where issue_id = ?");
+        $stmt = $db->prepare("update issues set priority = ?, assigned_to_id = ?, approved_at = datetime('now') where issue_id = ?");
         $stmt->execute([$_POST["priority"], $_POST["assigned_to_id"], $_POST["id"]]);
     } elseif (isset($_POST["reject"])) {
         $stmt = $db->prepare("delete from issues where issue_id = ?");

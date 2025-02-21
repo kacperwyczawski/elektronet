@@ -1,30 +1,31 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'dyrektor') {
-    header('Location: /denied.php');
+if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "dyrektor") {
+    header("Location: /denied.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require "../db.php";
-    if (isset($_POST['delete'])) {
+    if (isset($_POST["delete"])) {
         $stmt = $db->prepare("delete from users where user_id = ?");
-        $stmt->execute([$_POST['id']]);
-    } elseif (isset($_POST['submit'])) {
+        $stmt->execute([$_POST["id"]]);
+    } elseif (isset($_POST["submit"])) {
         $stmt = $db->prepare("insert into users (
             first_name,
             last_name,
             username,
             password,
-            role
-        ) values (?, ?, ?, ?, ?)");
+            role,
+            created_at
+        ) values (?, ?, ?, ?, ?, datetime('now'))");
         $stmt->execute([
-            $_POST['first_name'],
-            $_POST['last_name'],
-            $_POST['username'],
-            password_hash($_POST['password'], PASSWORD_DEFAULT),
-            $_POST['role']
+            $_POST["first_name"],
+            $_POST["last_name"],
+            $_POST["username"],
+            password_hash($_POST["password"], PASSWORD_DEFAULT),
+            $_POST["role"],
         ]);
     }
 }
@@ -88,7 +89,7 @@ require_once("../sidebar.php");
                     <td>
                         <form method="post" class="inline">
                             <input type="hidden" name="id" value="<?= $row['user_id'] ?>">
-                            <input type="submit" name="delete" value="Usuń"/>
+                            <input type="submit" name="delete" value="Usuń" />
                         </form>
                     </td>
                 </tr>
