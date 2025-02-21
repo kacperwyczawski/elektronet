@@ -39,3 +39,21 @@ $db->exec("create table issues (
     foreign key (raised_by_id) references users(user_id),
     foreign key (assigned_to_id) references users(user_id)
 )");
+
+$db->exec("create table students (
+    student_id integer primary key autoincrement,
+    first_name text not null,
+    last_name text not null,
+    school_id integer not null,
+    created_at text not null
+)");
+
+$db->exec("create table achievements (
+    achievement_id integer primary key autoincrement,
+    student_id integer not null,
+    name text not null,
+    result text not null,
+    achieved_at text not null,
+    created_at text not null,
+    foreign key(student_id) references students(student_id)
+)");

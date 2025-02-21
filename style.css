@@ -161,8 +161,7 @@ form {
     gap: 0.5rem;
 
     &.inline {
-        width: fit-content;
-        margin-left: auto;
+        flex-direction: row;
     }
 
     &:not(.inline) {

@@ -9,6 +9,10 @@ $navSections = [
         "Do zatwierdzenia" => "/issues/toapprove.php",
         "Do wykonania" => "/issues/todo.php",
     ],
+    "Osiągnięcia" => [
+        "Lista uczniów" => "/achievements/students.php",
+        "Dodaj ucznia" => "/achievements/add.php",
+    ],
     "Administracja" => [
         "Zarządzaj kontami" => "/administration/accounts.php",
     ],
