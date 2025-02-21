@@ -6,6 +6,7 @@ if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "dyrektor") {
     exit();
 }
 
+$error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require "../db.php";
     if (isset($_POST["delete"])) {
