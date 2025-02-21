@@ -189,21 +189,6 @@ form {
         }
     }
 
-    select {
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        width: 100%;
-        margin-bottom: 1rem;
-        background-color: var(--gray);
-        cursor: pointer;
-        border: none;
-
-        &:focus {
-            outline: 2px solid var(--blue);
-        }
-    }
-
     .password {
         display: flex;
         gap: 1rem;
@@ -211,6 +196,24 @@ form {
         input {
             flex: 1;
         }
+    }
+
+    select {
+        margin-bottom: 1rem;
+    }
+}
+
+select {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    background-color: var(--gray);
+    cursor: pointer;
+    border: none;
+
+    &:focus {
+        outline: 2px solid var(--blue);
     }
 }
 

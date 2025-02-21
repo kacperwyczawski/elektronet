@@ -46,29 +46,28 @@ require "../sidebar.php";
                 <tr>
                     <td><?= $row["room"] ?></td>
                     <td><?= $row["description"] ?></td>
-                    <td colspan="3">
-                        <form method="post">
-                            <select name="priority" required>
-                                <option value="0">Wysoki</option>
-                                <option value="1" selected>Normalny</option>
-                                <option value="2">Niski</option>
-                            </select>
-                            <select name="assigned_to_id" required>
-                                <?php
-                                $stmt = $db->prepare("select * from users where role = 'wykonawca'");
-                                $stmt->execute();
-                                foreach ($stmt as $row2):
-                                ?>
-                                    <option value="<?= $row2["user_id"] ?>"><?= $row2["first_name"] ?> <?= $row2["last_name"] ?></option>
-                                <?php
-                                endforeach;
-                                ?>
-                            </select>
+                    <td>
+                        <select name="priority" form="approve_form_<?= $row["issue_id"] ?>" required>
+                            <option value="0">Wysoki</option>
+                            <option value="1" selected>Normalny</option>
+                            <option value="2">Niski</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="assigned_to_id" form="approve_form_<?= $row["issue_id"] ?>" required>
+                            <?php
+                            $stmt = $db->prepare("select * from users where role = 'wykonawca'");
+                            $stmt->execute();
+                            foreach ($stmt as $row2):
+                            ?>
+                                <option value="<?= $row2["user_id"] ?>"><?= $row2["first_name"] ?> <?= $row2["last_name"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td>
+                        <form method="post" id="approve_form_<?= $row["issue_id"] ?>" class="inline">
                             <input type="hidden" name="id" value="<?= $row["issue_id"] ?>">
                             <button type="submit" name="approve">Zatwierdź</button>
-                        </form>
-                        <form method="post">
-                            <input type="hidden" name="id" value="<?= $row["issue_id"] ?>">
                             <button type="submit" name="reject">Odrzuć</button>
                         </form>
                     </td>
