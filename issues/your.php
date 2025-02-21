@@ -17,7 +17,12 @@ require "../sidebar.php";
     $issues = $stmt->fetchAll();
     if (empty($issues)):
     ?>
-        <p>Nie zgłosił<?= $_SESSION["is_male"] ? "e" : "a" ?>ś jeszcze żadnych problemów. <a href="/issues/report.php">Zgłoś problem</a></p>
+        <p>
+            Pusto! Wszystkie zgłoszone problemy zostały rozwiązane lub odrzucone.
+        </p>
+        <p>
+            Możesz zgłosić nowy problem <a href="/issues/report.php">tutaj</a>.
+        </p>
     <?php else: ?>
         <table>
             <tr>

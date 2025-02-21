@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["first_name"] = $row["first_name"];
         $_SESSION["username"] = $username;
         $_SESSION["role"] = $row["role"];
-        $_SESSION["is_male"] = $row["is_male"];
         header("Location: /");
     }
 }
