@@ -6,7 +6,8 @@ $db->exec("create table users (
     last_name text not null,
     username text not null,
     password text not null,
-    role text not null
+    role text not null,
+    is_male integer not null
 )");
 $db->exec("insert into users (
     first_name,
@@ -19,7 +20,8 @@ $db->exec("insert into users (
     'Wyczawski',
     'kacwyc',
     '" . password_hash('admin', PASSWORD_DEFAULT) . "',
-    'dyrektor'
+    'dyrektor',
+    1
 )");
 $db->exec("create table issues (
     issue_id integer primary key,

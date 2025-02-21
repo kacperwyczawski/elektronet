@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"];
 
     require("db.php");
-    $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt = $db->prepare("select * from users where username = ?");
     $stmt->execute([$username]);
     $row = $stmt->fetch();
     if (!$row) {
@@ -18,12 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["first_name"] = $row["first_name"];
         $_SESSION["username"] = $username;
         $_SESSION["role"] = $row["role"];
+        $_SESSION["is_male"] = $row["is_male"];
         header("Location: /");
     }
 }
 require_once("sidebar.php");
 ?>
-
 
 <main>
     <h1>
