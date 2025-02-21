@@ -94,7 +94,7 @@ require_once("../sidebar.php");
                     <td><?= $row['username'] ?></td>
                     <td><?= $row['role'] ?></td>
                     <td>
-                        <form method="post" class="inline">
+                        <form method="post" class="inline" onsubmit="return confirm('Czy na pewno chcesz usunąć użytkownika <?= $row['username'] ?>?')">
                             <input type="hidden" name="id" value="<?= $row['user_id'] ?>">
                             <input type="submit" name="delete" value="Usuń" />
                         </form>
