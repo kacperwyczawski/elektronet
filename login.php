@@ -25,10 +25,10 @@ require_once("sidebar.php");
 ?>
 
 <main>
-    <h1>
-        Zaloguj się
-    </h1>
-    <?= $error ?>
+    <h1>Zaloguj się</h1>
+    <?php if ($error !== ""): ?>
+        <p class="error"><?= $error ?></p>
+    <?php endif; ?>
     <form method="POST">
         <label for="username">Nazwa użytkownika:</label>
         <input type="text" id="username" name="username" required>
