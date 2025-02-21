@@ -19,7 +19,7 @@ require "../sidebar.php";
         </tr>
         <?php
         require "../db.php";
-        $stmt = $db->prepare("select room, description, priority, first_name, last_name from issues natural join users order by priority");
+        $stmt = $db->prepare("select * from issues join users on user_id = assigned_to_id order by priority");
         $stmt->execute();
         foreach ($stmt as $row):
         ?>
