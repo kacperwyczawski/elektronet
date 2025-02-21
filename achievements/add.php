@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $stmt = $db->prepare("insert into students (first_name, last_name, school_id, created_at) values (?, ?, ?, datetime('now'))");
         if ($stmt->execute([$first_name, $last_name, $school_id])) {
-            $message = "<p class='success'>Uczeń został utworzony.</p>";
+            $message = "<p class='success'>Uczeń został dodany.</p>";
         } else {
-            $message = "<p class='error'>Wystąpił błąd przy tworzeniu ucznia.</p>";
+            $message = "<p class='error'>Wystąpił błąd przy dodawaniu ucznia.</p>";
         }
     }
 }
