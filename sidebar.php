@@ -1,3 +1,23 @@
+<?php
+$currentPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+$navSections = [
+    "Zgłoszenia" => [
+        "Zgłoś problem" => "/issues/report.php",
+        "Twoje zgłoszenia" => "/issues/your.php",
+        "Wszystkie zgłoszenia" => "/issues/all.php",
+        "Do zatwierdzenia" => "/issues/toapprove.php",
+        "Do wykonania" => "/issues/todo.php",
+    ],
+    "Administracja" => [
+        "Zarządzaj kontami" => "/administration/accounts.php",
+    ],
+    "Konto" => [
+        "Zmień hasło" => "/account/password.php",
+        "Wyloguj się" => "/account/logout.php",
+    ]
+];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,41 +32,31 @@
 <body>
     <aside>
         <div class="logo">
-            <?php if (isset($_SESSION['username'])): ?>
-                <span><?= $_SESSION['username'] ?></span>
+            <?php if (isset($_SESSION["username"])): ?>
+                <span><?= $_SESSION["username"] ?></span>
                 <span class="chip green"><?= $_SESSION["role"] ?></span>
             <?php else: ?>
                 <span>Elektronet</span>
             <?php endif; ?>
         </div>
         <nav>
-            <div>
-                <h2>Zgłoszenia</h2>
-                <ul>
-                    <li><a href="/issues/report.php">Zgłoś probelm</a></li>
-                    <li><a href="/issues/your.php">Twoje zgłoszenia</a></li>
-                    <li><a href="/issues/all.php">Wszystkie zgłoszenia</a></li>
-                    <li><a href="/issues/toapprove.php">Do zatwierdzenia</a></li>
-                    <li><a href="/issues/todo.php">Do wykonania</a></li>
-                </ul>
-            </div>
-            <div>
-                <h2>Administracja</h2>
-                <ul>
-                    <li><a href="/administration/accounts.php">Zarządzaj kontami</a></li>
-                </ul>
-            </div>
-            <div>
-                <h2>Konto</h2>
-                <ul>
-                    <li><a href="/account/password.php">Zmień hasło</a></li>
-                    <li><a href="/account/logout.php">Wyloguj się</a></li>
-                </ul>
-            </div>
+            <?php foreach ($navSections as $sectionName => $links): ?>
+                <div>
+                    <h2><?= $sectionName ?></h2>
+                    <ul>
+                        <?php
+                        foreach ($links as $title => $url) {
+                            $activeClass = ($currentPath === $url) ? " class='active'" : "";
+                            echo "<li><a href=\"$url\"$activeClass>$title</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
         </nav>
         <footer>
-            &copy; <?= date('Y') ?> ZSE Rzeszów
+            &copy; <?= date("Y") ?> ZSE Rzeszów
             <br>
-            Wykonał <a href="https://wyczawski.dev">Kacper Wyczawski</a>
+            Wykonał <a href="/wyczawski.dev">Kacper Wyczawski</a>
         </footer>
     </aside>
