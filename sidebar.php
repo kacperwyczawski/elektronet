@@ -36,7 +36,7 @@ $navSections = [
                 <span><?= $_SESSION["username"] ?></span>
                 <span class="chip green"><?= $_SESSION["role"] ?></span>
             <?php else: ?>
-                <span>Elektronet</span>
+                <img src="/images/logo.svg" alt="logo">
             <?php endif; ?>
         </div>
         <nav>
