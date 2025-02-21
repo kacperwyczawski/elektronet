@@ -12,30 +12,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = $db->prepare("delete from users where user_id = ?");
         $stmt->execute([$_POST["id"]]);
     } elseif (isset($_POST["submit"])) {
-        $stmt = $db->prepare("insert into users (
-            first_name,
-            last_name,
-            username,
-            password,
-            role,
-            created_at
-        ) values (?, ?, ?, ?, ?, datetime('now'))");
-        $stmt->execute([
-            $_POST["first_name"],
-            $_POST["last_name"],
-            $_POST["username"],
-            password_hash($_POST["password"], PASSWORD_DEFAULT),
-            $_POST["role"],
-        ]);
+        $stmt = $db->prepare("select * from users where username = ?");
+        $stmt->execute([$_POST["username"]]);
+        if ($stmt->fetch()) {
+            $error = "Nazwa użytkownika jest już zajęta.";
+        } else {
+            $stmt = $db->prepare("insert into users (
+                first_name,
+                last_name,
+                username,
+                password,
+                role,
+                created_at
+            ) values (?, ?, ?, ?, ?, datetime('now'))");
+            $stmt->execute([
+                $_POST["first_name"],
+                $_POST["last_name"],
+                $_POST["username"],
+                password_hash($_POST["password"], PASSWORD_DEFAULT),
+                $_POST["role"],
+            ]);
+        }
     }
 }
 
 require_once("../sidebar.php");
 ?>
 <main>
-    <h1>
-        Dodaj pracownika
-    </h1>
+    <h1>Dodaj pracownika</h1>
+    <?php if ($error !== ""): ?>
+        <p class="error"><?= $error ?></p>
+    <?php endif; ?>
     <form method="post">
         <label for="first_name">Imię:</label>
         <input type="text" id="first_name" name="first_name" required>
@@ -54,7 +61,6 @@ require_once("../sidebar.php");
                 })
             </script>
         </div>
-        </script>
         <label for="role">Rola:</label>
         <select id="role" name="role" required>
             <option value="pracownik">Pracownik</option>
