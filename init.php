@@ -55,5 +55,5 @@ $db->exec("create table achievements (
     result text not null,
     achieved_at text not null,
     created_at text not null,
-    foreign key(student_id) references students(student_id)
+    foreign key(student_id) references students(student_id) ON DELETE CASCADE
 )");

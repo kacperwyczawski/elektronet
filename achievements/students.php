@@ -44,7 +44,7 @@ require "../sidebar.php";
                     <td>
                         <form method="post" action="students.php" class="inline">
                             <input type="hidden" name="student_id" value="<?= $row['student_id'] ?>">
-                            <input type="submit" name="delete" value="Usuń" onclick="return confirm('Are you sure you want to delete this student?');">
+                            <input type="submit" name="delete" value="Usuń" onclick="return confirm('Na pewno usunąć ucznia? Spowoduje to usunięcie wszystkich jego osiągnięć.')">
                             <input type="submit" name="achievements" value="Osiągnięcia">
                         </form>
                     </td>
