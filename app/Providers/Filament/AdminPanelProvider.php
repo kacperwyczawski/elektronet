@@ -6,6 +6,8 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -39,6 +41,18 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+            ])
+            ->navigationGroups([
+                'Zgłoszenia',
+                'Uczniowie',
+                'Pracownicy',
+            ])
+            ->collapsibleNavigationGroups(false)
+            ->sidebarCollapsibleOnDesktop()
+            // ->topNavigation()
+            ->sidebarWidth('16rem')
+            ->userMenuItems([
+                'logout' => MenuItem::make()->label('Wyloguj się'),
             ])
             ->middleware([
                 EncryptCookies::class,
