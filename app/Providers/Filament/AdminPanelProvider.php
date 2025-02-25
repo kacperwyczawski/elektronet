@@ -53,7 +53,11 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('16rem')
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Wyloguj się'),
+            ])    
+            ->colors([
+                'primary' => '#d4293d',
             ])
+            ->brandName('Elektronet')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
