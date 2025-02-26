@@ -7,6 +7,8 @@ use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -94,5 +96,29 @@ class StudentResource extends Resource
             'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('first_name')
+                    ->label('Imię'),
+                Infolists\Components\TextEntry::make('last_name')
+                    ->label('Nazwisko'),
+                Infolists\Components\TextEntry::make('school_id_number')
+                    ->label('Numer legitymacji'),
+                Infolists\Components\RepeatableEntry::make('achievements')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name')
+                            ->label('Nazwa'),
+                        Infolists\Components\TextEntry::make('result')
+                            ->label('Wynik'),
+                        Infolists\Components\TextEntry::make('achieved_at')
+                            ->label('Data osiągnięcia'),
+                    ])
+                    ->label('Osiągnięcia'),
+            ])
+            ->columns(3);
     }
 }
