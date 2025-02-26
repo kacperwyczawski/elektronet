@@ -50,9 +50,6 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
-            ->userMenuItems([
-                'logout' => MenuItem::make()->label('Wyloguj się'),
-            ])    
             ->colors([
                 'primary' => '#d4293d',
             ])
