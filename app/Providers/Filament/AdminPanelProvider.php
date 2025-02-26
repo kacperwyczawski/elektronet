@@ -49,7 +49,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->collapsibleNavigationGroups(false)
             ->sidebarCollapsibleOnDesktop()
-            // ->topNavigation()
             ->sidebarWidth('16rem')
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Wyloguj się'),
