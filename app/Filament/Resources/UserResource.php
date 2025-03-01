@@ -65,6 +65,7 @@ class UserResource extends Resource
                         'Kierownik' => 'Kierownik',
                         'Dyrektor' => 'Dyrektor',
                     ])
+                    ->default('Pracownik')
                     ->selectablePlaceholder(false)
                     ->label('Rola')
                     ->required(),
@@ -74,15 +75,29 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->groups([
+                Tables\Grouping\Group::make('role')
+                    ->label('Rola'),
+            ])
+            ->defaultGroup('role')
+            ->groupingSettingsHidden(true)
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
+                    ->label('Imię')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->label('Nazwisko')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nazwa użytkownika')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('role')
-                    ->searchable(),
+                    ->label('Rola')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Dyrektor' => 'info',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
