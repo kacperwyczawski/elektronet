@@ -42,6 +42,7 @@ class AchievementResource extends Resource
                     ->label('Data osiągnięcia'),
                 Forms\Components\Select::make('student_id')
                     ->required()
+                    ->label('Uczeń')
                     ->relationship('student')
                     ->getOptionLabelFromRecordUsing(fn(Model $record) =>
                         $record->first_name . ' ' .
