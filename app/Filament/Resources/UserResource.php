@@ -6,12 +6,17 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class UserResource extends Resource
 {
@@ -29,14 +34,39 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('first_name')
+                    ->label('Imię')
+                    ->required(),
+                Forms\Components\TextInput::make('last_name')
+                    ->label('Nazwisko')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->label('Nazwa użytkownika')
+                    ->suffixAction(
+                        Action::make('generateName')
+                            ->icon('heroicon-o-sparkles')
+                            ->action(function (Get $get, Set $set) {
+                                $name = Str::take($get('first_name'), 3) . Str::take($get('last_name'), 3);
+                                $name = Str::ascii($name);
+                                $name = strtolower($name);
+                                $set('name', $name);
+                            })
+                    )
                     ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required(),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
+                    ->label('Hasło')
                     ->password()
+                    ->revealable()
+                    ->required(),
+                Forms\Components\Select::make('role')
+                    ->options([
+                        'Pracownik' => 'Pracownik',
+                        'Wykonawca' => 'Wykonawca',
+                        'Kierownik' => 'Kierownik',
+                        'Dyrektor' => 'Dyrektor',
+                    ])
+                    ->selectablePlaceholder(false)
+                    ->label('Rola')
                     ->required(),
             ]);
     }
@@ -45,13 +75,14 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('first_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('last_name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                Tables\Columns\TextColumn::make('role')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
