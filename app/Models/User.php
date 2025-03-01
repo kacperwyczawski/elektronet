@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     
     public function issues() {
-        return $this->hasMany(Issue::class, 'raised_by_id');
+        return $this->hasMany(Issue::class);
     }
     
     public function assignedIssues() {

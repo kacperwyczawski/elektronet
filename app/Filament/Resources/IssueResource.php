@@ -30,21 +30,13 @@ class IssueResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('room')
+                    ->label('sala')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\Textarea::make('description')
+                    ->label('opis')
                     ->required(),
-                Forms\Components\TextInput::make('priority')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Toggle::make('is_approved')
-                    ->required(),
-                Forms\Components\TextInput::make('raised_by_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('assigned_to_id')
-                    ->required()
-                    ->numeric(),
-            ]);
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -60,7 +52,7 @@ class IssueResource extends Resource
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_approved')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('raised_by_id')
+                Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assigned_to_id')
@@ -103,7 +95,6 @@ class IssueResource extends Resource
         return [
             'index' => Pages\ListIssues::route('/'),
             'create' => Pages\CreateIssue::route('/create'),
-            'view' => Pages\ViewIssue::route('/{record}'),
             'edit' => Pages\EditIssue::route('/{record}/edit'),
         ];
     }

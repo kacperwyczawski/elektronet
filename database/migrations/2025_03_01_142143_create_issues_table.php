@@ -15,10 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('room');
             $table->string('description');
-            $table->integer('priority');
-            $table->boolean('is_approved');
-            $table->foreignId('raised_by_id')->constrained()->onDelete('cascade');
-            $table->foreignId('assigned_to_id')->constrained()->onDelete('cascade');
+            $table->integer('priority')
+                ->nullable();
+            $table->boolean('is_approved')
+                ->default(false);
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('assigned_to_id')
+                ->nullable()
+                ->constrained(
+                    table: 'users',
+                )
+                ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
