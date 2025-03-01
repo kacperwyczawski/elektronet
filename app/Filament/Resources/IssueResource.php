@@ -30,10 +30,10 @@ class IssueResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('room')
-                    ->label('sala')
+                    ->label('Sala')
                     ->required(),
                 Forms\Components\Textarea::make('description')
-                    ->label('opis')
+                    ->label('Opis')
                     ->required(),
             ])
             ->columns(1);
@@ -43,21 +43,30 @@ class IssueResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('is_approved')
+                    ->label('Zatwierdzone')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('room')
+                    ->label('Sala')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Opis')
+                    ->wrap()
+                    ->lineClamp(2)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('priority')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('is_approved')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                    ->label('Priorytet')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => match ($state) {
+                        1 => 'Niski',
+                        2 => 'Normalny',
+                        3 => 'Wysoki',
+                        default => 'Brak',
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assigned_to_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Przypisane do')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -71,7 +80,6 @@ class IssueResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
