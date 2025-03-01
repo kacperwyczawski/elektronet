@@ -19,7 +19,7 @@ class IssueResource extends Resource
 
     protected static ?string $modelLabel = 'Zgłoszenie';
 
-    protected static ?string $pluralModelLabel = 'Zgłoszenia';
+    protected static ?string $pluralModelLabel = 'Twoje zgłoszenia';
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
