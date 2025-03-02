@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class AssignedIssueResource extends Resource
 {
@@ -25,12 +26,9 @@ class AssignedIssueResource extends Resource
 
     protected static ?string $navigationGroup = 'Zgłoszenia';
 
-    public static function form(Form $form): Form
+    public static function getEloquentQuery(): Builder
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return parent::getEloquentQuery()->where('assigned_to_id', Auth::id());
     }
 
     public static function table(Table $table): Table
@@ -55,9 +53,6 @@ class AssignedIssueResource extends Resource
                         default => 'Brak',
                     })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('assigned_to_id')
-                    ->label('Przypisane do')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -71,12 +66,11 @@ class AssignedIssueResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
