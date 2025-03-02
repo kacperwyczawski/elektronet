@@ -54,7 +54,8 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => '#d4293d',
                 'danger' => '#d4293d',
             ])
-            ->brandName('Elektronet')
+            ->brandLogo(fn () => view('filament.admin.logo'))
+            ->brandLogoHeight('')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
