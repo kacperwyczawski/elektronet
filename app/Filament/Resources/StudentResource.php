@@ -106,6 +106,8 @@ class StudentResource extends Resource
                 Infolists\Components\TextEntry::make('school_id_number')
                     ->label('Numer legitymacji'),
                 Infolists\Components\RepeatableEntry::make('achievements')
+                    ->grid(4)
+                    ->columnSpanFull()
                     ->schema([
                         Infolists\Components\TextEntry::make('name')
                             ->label('Nazwa'),
