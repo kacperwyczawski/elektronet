@@ -5,12 +5,20 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IssueResource\Pages;
 use App\Filament\Resources\IssueResource\RelationManagers;
 use App\Models\Issue;
+use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class IssueResource extends Resource
@@ -25,53 +33,39 @@ class IssueResource extends Resource
 
     protected static ?string $navigationGroup = 'Zgłoszenia';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('room')
-                    ->label('Sala')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label('Opis')
-                    ->required(),
-            ])
-            ->columns(1);
-    }
-
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('is_approved')
-                    ->label('Zatwierdzone')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('room')
+                TextColumn::make('room')
                     ->label('Sala')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Opis')
                     ->wrap()
                     ->lineClamp(2)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('priority')
+                SelectColumn::make('priority')
                     ->label('Priorytet')
-                    ->badge()
-                    ->formatStateUsing(fn ($state): string => match ($state) {
+                    ->options([
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',
-                        default => 'Brak',
-                    })
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('assigned_to_id')
+                    ]),
+                SelectColumn::make('assigned_to_id')
                     ->label('Przypisane do')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                    ->options(fn() =>
+                        User::query()
+                            ->where('role', 'Wykonawca')
+                            ->pluck('name', 'id')
+                            ->toArray()),
+                ToggleColumn::make('is_approved')
+                    ->label('Zatwierdzone'),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -80,7 +74,6 @@ class IssueResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -102,8 +95,6 @@ class IssueResource extends Resource
     {
         return [
             'index' => Pages\ListIssues::route('/'),
-            'create' => Pages\CreateIssue::route('/create'),
-            'edit' => Pages\EditIssue::route('/{record}/edit'),
         ];
     }
 
