@@ -3,22 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\IssueResource\Pages;
-use App\Filament\Resources\IssueResource\RelationManagers;
 use App\Models\Issue;
 use App\Models\User;
-use Filament\Actions\Action;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class IssueResource extends Resource
@@ -54,11 +47,10 @@ class IssueResource extends Resource
                     ]),
                 SelectColumn::make('assigned_to_id')
                     ->label('Przypisane do')
-                    ->options(fn() =>
-                        User::query()
-                            ->where('role', 'Wykonawca')
-                            ->pluck('name', 'id')
-                            ->toArray()),
+                    ->options(fn () => User::query()
+                        ->where('role', 'Wykonawca')
+                        ->pluck('name', 'id')
+                        ->toArray()),
                 ToggleColumn::make('is_approved')
                     ->label('Zatwierdzone'),
                 TextColumn::make('created_at')

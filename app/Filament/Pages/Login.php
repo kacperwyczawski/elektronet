@@ -4,7 +4,6 @@ namespace App\Filament\Pages;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Pages\Page;
 use Filament\Pages\Auth\Login as BaseLogin;
 
 class Login extends BaseLogin

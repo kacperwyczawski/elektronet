@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
@@ -13,9 +12,6 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class UserResource extends Resource
@@ -46,7 +42,7 @@ class UserResource extends Resource
                         Action::make('generateName')
                             ->icon('heroicon-o-sparkles')
                             ->action(function (Get $get, Set $set) {
-                                $name = Str::take($get('first_name'), 3) . Str::take($get('last_name'), 3);
+                                $name = Str::take($get('first_name'), 3).Str::take($get('last_name'), 3);
                                 $name = Str::ascii($name);
                                 $name = strtolower($name);
                                 $set('name', $name);

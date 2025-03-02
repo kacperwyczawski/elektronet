@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Wyczawski',
             'name' => 'kacwyc',
             'password' => Hash::make('admin'),
-            'role' => 'Dyrektor'
+            'role' => 'Dyrektor',
         ]);
     }
 }

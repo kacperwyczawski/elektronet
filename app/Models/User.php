@@ -11,12 +11,14 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-    
-    public function issues() {
+
+    public function issues()
+    {
         return $this->hasMany(Issue::class);
     }
-    
-    public function assignedIssues() {
+
+    public function assignedIssues()
+    {
         return $this->hasMany(Issue::class, 'assigned_to_id');
     }
 

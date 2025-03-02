@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AchievementResource\Pages;
-use App\Filament\Resources\AchievementResource\RelationManagers;
 use App\Models\Achievement;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AchievementResource extends Resource
 {
@@ -44,10 +41,9 @@ class AchievementResource extends Resource
                     ->required()
                     ->label('Uczeń')
                     ->relationship('student')
-                    ->getOptionLabelFromRecordUsing(fn(Model $record) =>
-                        $record->first_name . ' ' .
-                        $record->last_name . ' [' .
-                        $record->school_id_number . ']')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->first_name.' '.
+                        $record->last_name.' ['.
+                        $record->school_id_number.']')
                     ->searchable()
                     ->preload()
                     ->createOptionForm([
@@ -60,7 +56,7 @@ class AchievementResource extends Resource
                         Forms\Components\TextInput::make('school_id_number')
                             ->required()
                             ->label('Numer legitymacji'),
-                    ])
+                    ]),
             ]);
     }
 

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\YourIssueResource\Pages;
-use App\Filament\Resources\YourIssueResource\RelationManagers;
 use App\Models\Issue;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,7 +15,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class YourIssueResource extends Resource
@@ -39,15 +37,15 @@ class YourIssueResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Forms\Components\TextInput::make('room')
-                ->label('sala')
-                ->required(),
-            Forms\Components\Textarea::make('description')
-                ->label('opis')
-                ->required(),
-        ])
-        ->columns(1);
+            ->schema([
+                Forms\Components\TextInput::make('room')
+                    ->label('sala')
+                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->label('opis')
+                    ->required(),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -68,7 +66,7 @@ class YourIssueResource extends Resource
                 TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn($state): string => match ($state) {
+                    ->formatStateUsing(fn ($state): string => match ($state) {
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',

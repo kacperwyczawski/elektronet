@@ -3,15 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AssignedIssueResource\Pages;
-use App\Filament\Resources\AssignedIssueResource\RelationManagers;
 use App\Models\Issue;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class AssignedIssueResource extends Resource
@@ -46,7 +42,7 @@ class AssignedIssueResource extends Resource
                 Tables\Columns\TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn($state): string => match ($state) {
+                    ->formatStateUsing(fn ($state): string => match ($state) {
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',
