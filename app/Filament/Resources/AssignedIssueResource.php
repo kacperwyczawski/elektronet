@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\IssueResource\Pages;
-use App\Filament\Resources\IssueResource\RelationManagers;
+use App\Filament\Resources\AssignedIssueResource\Pages;
+use App\Filament\Resources\AssignedIssueResource\RelationManagers;
 use App\Models\Issue;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,13 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class IssueResource extends Resource
+class AssignedIssueResource extends Resource
 {
     protected static ?string $model = Issue::class;
 
     protected static ?string $modelLabel = 'Zgłoszenie';
 
-    protected static ?string $pluralModelLabel = 'Zgłoszenia';
+    protected static ?string $pluralModelLabel = 'Przypisane zgłoszenia';
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
@@ -29,23 +29,14 @@ class IssueResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('room')
-                    ->label('Sala')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label('Opis')
-                    ->required(),
-            ])
-            ->columns(1);
+                //
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('is_approved')
-                    ->label('Zatwierdzone')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('room')
                     ->label('Sala')
                     ->searchable(),
@@ -57,7 +48,7 @@ class IssueResource extends Resource
                 Tables\Columns\TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn ($state): string => match ($state) {
+                    ->formatStateUsing(fn($state): string => match ($state) {
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',
@@ -101,17 +92,7 @@ class IssueResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListIssues::route('/'),
-            'create' => Pages\CreateIssue::route('/create'),
-            'edit' => Pages\EditIssue::route('/{record}/edit'),
+            'index' => Pages\ListAssignedIssues::route('/'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }
