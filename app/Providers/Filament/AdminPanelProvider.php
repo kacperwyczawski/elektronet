@@ -52,6 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('16rem')
             ->colors([
                 'primary' => '#d4293d',
+                'danger' => '#d4293d',
             ])
             ->brandName('Elektronet')
             ->middleware([
