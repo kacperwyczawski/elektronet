@@ -2,9 +2,9 @@
     <x-filament::section>
         <div class="flex items-center gap-x-3">
             <div class="flex-1">
-                <p>
+                <h2 class="text-xl font-bold text-gray-950 dark:text-white leading-6 tracking-tight">
                     Elektronet
-                </p>
+                </h2>
                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                     by <a href="https://wyczawski.dev" class="underline">Kacper Wyczawski</a>
                 </p>
