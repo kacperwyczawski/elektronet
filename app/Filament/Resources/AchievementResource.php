@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AchievementResource\Pages;
+use App\Filament\Widgets\AchievementsChart;
 use App\Models\Achievement;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -116,6 +117,13 @@ class AchievementResource extends Resource
             'index' => Pages\ListAchievements::route('/'),
             'create' => Pages\CreateAchievement::route('/create'),
             'edit' => Pages\EditAchievement::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            AchievementsChart::class,
         ];
     }
 }
