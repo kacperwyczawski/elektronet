@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IssueAssignmentResource\Pages;
 use App\Models\IssueAssignment;
 use App\Models\User;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -25,6 +28,33 @@ class IssueAssignmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
 
     protected static ?string $navigationGroup = 'Zgłoszenia';
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                IconEntry::make('is_approved')
+                    ->label('Zatwierdzone')
+                    ->boolean(),
+                TextEntry::make('issue.room')
+                    ->label('Sala'),
+                TextEntry::make('priority')
+                    ->label('Priorytet')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => match ($state) {
+                        1 => 'Niski',
+                        2 => 'Normalny',
+                        3 => 'Wysoki',
+                        default => 'Brak',
+                    }),
+                TextEntry::make('user.name')
+                    ->label('Przypisano do'),
+                TextEntry::make('issue.description')
+                    ->label('Opis')
+                    ->columnSpanFull(),
+            ])
+            ->columns(4);
+    }
 
     public static function table(Table $table): Table
     {
@@ -65,7 +95,7 @@ class IssueAssignmentResource extends Resource
                 TextColumn::make('issue.description')
                     ->label('Opis')
                     ->wrap()
-                    ->lineClamp(2)
+                    ->lineClamp(3)
                     ->searchable(),
                 SelectColumn::make('priority')
                     ->label('Priorytet')
