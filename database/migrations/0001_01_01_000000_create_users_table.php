@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('role');
+            $table->string('room')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

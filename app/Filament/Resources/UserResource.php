@@ -11,6 +11,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -64,6 +65,9 @@ class UserResource extends Resource
                     ->selectablePlaceholder(false)
                     ->label('Rola')
                     ->required(),
+                Forms\Components\TextInput::make('room')
+                    ->label('Sala')
+                    ->prefix('Opiekun sali:'),
             ]);
     }
 
@@ -93,6 +97,9 @@ class UserResource extends Resource
                         'Dyrektor' => 'info',
                         default => 'gray',
                     }),
+                TextColumn::make('room')
+                    ->label('Sala')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
