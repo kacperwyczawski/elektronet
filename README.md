@@ -68,3 +68,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## TODO: write docs for initializing the app
 
 1. `php artisan migrate:fresh --seed`
+2. set `APP_LOCALE` environment variable to `pl`
+2. set `APP_NAME` environment variable to `Elektronet`
+
+## TODO: contributing docs
+
+- klasy CSS zdefiniowane na potrzeby aplikacji powinny zaczynać się od `elektronet-`
