@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Issue extends Model
+class IssueAssignment extends Model
 {
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function assignment()
+    public function issue()
     {
-        return $this->hasOne(IssueAssignment::class);
+        return $this->belongsTo(Issue::class);
     }
 }

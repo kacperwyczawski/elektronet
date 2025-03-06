@@ -12,7 +12,7 @@ class AchievementsChart extends ChartWidget
 {
     protected static ?string $heading = 'Osiągnięcia na miesiąc';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected static ?string $pollingInterval = null;
 
@@ -50,10 +50,10 @@ class AchievementsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
+                    'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
-            'labels' => $data->map(fn(TrendValue $value) => $value->date),
+            'labels' => $data->map(fn (TrendValue $value) => $value->date),
         ];
     }
 

@@ -3,24 +3,36 @@
 namespace App\Filament\Resources\IssueResource\Pages;
 
 use App\Filament\Resources\IssueResource;
-use App\Models\Issue;
+use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class ListIssues extends ListRecords
 {
     protected static string $resource = IssueResource::class;
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+        ];
+    }
+
     public function getTabs(): array
     {
         return [
             'all' => Tab::make('Wszystkie'),
-            'not_approved' => Tab::make('Do Zatwierdzenia')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_approved', false))
-                ->badge(Issue::query()->where('is_approved', false)->count()),
-            'approved' => Tab::make('Zatwierdzone')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_approved', true)),
+            'room' => Tab::make('W Twojej sali')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('room', Auth::user()->room)),
+            'your' => Tab::make('Twoje zgłoszenia')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id())),
+            'todo' => Tab::make('Do wykonania')
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->join('issue_assignments', 'issue_assignments.issue_id', '=', 'issues.id')
+                    ->where('issue_assignments.user_id', Auth::id())
+                    ->select('issues.*')),
         ];
     }
 }

@@ -19,7 +19,7 @@ class User extends Authenticatable
 
     public function assignedIssues()
     {
-        return $this->hasMany(Issue::class, 'assigned_to_id');
+        return $this->hasMany(IssueAssignment::class);
     }
 
     /**

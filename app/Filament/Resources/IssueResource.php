@@ -4,32 +4,48 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\IssueResource\Pages;
 use App\Models\Issue;
-use App\Models\User;
+use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class IssueResource extends Resource
 {
     protected static ?string $model = Issue::class;
 
-    protected static ?string $modelLabel = 'Zgłoszenie';
+    protected static ?string $modelLabel = 'zgłoszenie';
 
-    protected static ?string $pluralModelLabel = 'Zgłoszenia';
+    protected static ?string $pluralModelLabel = 'zgłoszenia';
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
     protected static ?string $navigationGroup = 'Zgłoszenia';
 
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('room')
+                    ->label('sala')
+                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->label('opis')
+                    ->required(),
+            ])
+            ->columns(1);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                IconColumn::make('assignment.is_approved')
+                    ->label('Zatwierdzone')
+                    ->boolean(),
                 TextColumn::make('room')
                     ->label('Sala')
                     ->searchable(),
@@ -38,21 +54,19 @@ class IssueResource extends Resource
                     ->wrap()
                     ->lineClamp(2)
                     ->searchable(),
-                SelectColumn::make('priority')
+                TextColumn::make('assignment.priority')
                     ->label('Priorytet')
-                    ->options([
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => match ($state) {
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',
-                    ]),
-                SelectColumn::make('assigned_to_id')
-                    ->label('Przypisane do')
-                    ->options(fn () => User::query()
-                        ->where('role', 'Wykonawca')
-                        ->pluck('name', 'id')
-                        ->toArray()),
-                ToggleColumn::make('is_approved')
-                    ->label('Zatwierdzone'),
+                        default => 'Brak',
+                    })
+                    ->sortable(),
+                TextColumn::make('assignment.user.name')
+                    ->label('Przypisano do')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -63,15 +77,13 @@ class IssueResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -87,14 +99,9 @@ class IssueResource extends Resource
     {
         return [
             'index' => Pages\ListIssues::route('/'),
+            'create' => Pages\CreateIssue::route('/create'),
+            'view' => Pages\ViewIssue::route('/{record}'),
+            'edit' => Pages\EditIssue::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

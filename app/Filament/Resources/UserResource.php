@@ -57,7 +57,6 @@ class UserResource extends Resource
                 Forms\Components\Select::make('role')
                     ->options([
                         'Pracownik' => 'Pracownik',
-                        'Wykonawca' => 'Wykonawca',
                         'Kierownik' => 'Kierownik',
                         'Dyrektor' => 'Dyrektor',
                     ])
