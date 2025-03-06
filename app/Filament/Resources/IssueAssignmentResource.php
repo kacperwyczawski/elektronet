@@ -39,8 +39,9 @@ class IssueAssignmentResource extends Resource
                             ->body($record->issue->description)
                             ->info()
                             ->actions([
-                                Action::make('view') // TODO: open the issue
+                                Action::make('view')
                                     ->label('Zobacz')
+                                    ->url(route('filament.admin.resources.issues.view', $record->issue))
                                     ->button(),
                             ])
                             ->sendToDatabase($record->user);
