@@ -53,6 +53,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->brandLogoHeight('')
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('10s')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

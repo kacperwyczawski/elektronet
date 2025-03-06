@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IssueAssignmentResource\Pages;
 use App\Models\IssueAssignment;
 use App\Models\User;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
@@ -28,8 +30,21 @@ class IssueAssignmentResource extends Resource
     {
         return $table
             ->columns([
-                ToggleColumn::make('is_approved') // TODO: action button instead
-                    ->label('Zatwierdzone'),
+                ToggleColumn::make('is_approved')
+                    ->label('Zatwierdzone')
+                    ->afterStateUpdated(function ($record, $state) {
+                        // TODO: do not send the notification when toggling from assigned to not assigned
+                        Notification::make()
+                            ->title('Przypisano nowe zgłoszenie w sali "'.$record->issue->room.'"')
+                            ->body($record->issue->description)
+                            ->info()
+                            ->actions([
+                                Action::make('view') // TODO: open the issue
+                                    ->label('Zobacz')
+                                    ->button(),
+                            ])
+                            ->sendToDatabase($record->user);
+                    }),
                 TextColumn::make('issue.room')
                     ->label('Sala')
                     ->searchable(),

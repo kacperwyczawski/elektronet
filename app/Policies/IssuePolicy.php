@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Issue;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class IssuePolicy
 {
@@ -49,6 +48,7 @@ class IssuePolicy
         if ($issue->user_id == $user->id) {
             return true;
         }
+
         return false;
     }
 
@@ -60,6 +60,7 @@ class IssuePolicy
         if ($issue->user_id == $user->id || $issue->assignment->user_id == $user->id) {
             return true;
         }
+
         return false;
     }
 
