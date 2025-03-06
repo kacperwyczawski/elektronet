@@ -6,6 +6,9 @@ use App\Filament\Resources\IssueResource\Pages;
 use App\Models\Issue;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
@@ -38,6 +41,33 @@ class IssueResource extends Resource
                     ->required(),
             ])
             ->columns(1);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                IconEntry::make('assignment.is_approved')
+                    ->label('Zatwierdzone')
+                    ->boolean(),
+                TextEntry::make('room')
+                    ->label('Sala'),
+                TextEntry::make('assignment.priority')
+                    ->label('Priorytet')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => match ($state) {
+                        1 => 'Niski',
+                        2 => 'Normalny',
+                        3 => 'Wysoki',
+                        default => 'Brak',
+                    }),
+                TextEntry::make('assignment.user.name')
+                    ->label('Przypisano do'),
+                TextEntry::make('description')
+                    ->label('Opis')
+                    ->columnSpanFull(),
+            ])
+            ->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -77,8 +107,7 @@ class IssueResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-            ])
+            ->filters([])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
