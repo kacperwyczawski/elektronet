@@ -47,6 +47,17 @@ class IssueAssignmentResource extends Resource
                                     ->button(),
                             ])
                             ->sendToDatabase($record->user);
+                        Notification::make()
+                            ->title('Twoje zgłoszenie w sali "'.$record->issue->room.'" zostało zatwierdzone')
+                            ->body($record->issue->description)
+                            ->success()
+                            ->actions([
+                                Action::make('view')
+                                    ->label('Zobacz')
+                                    ->url(route('filament.admin.resources.issues.view', $record->issue))
+                                    ->button(),
+                            ])
+                            ->sendToDatabase($record->issue->user);
                     }),
                 TextColumn::make('issue.room')
                     ->label('Sala')
