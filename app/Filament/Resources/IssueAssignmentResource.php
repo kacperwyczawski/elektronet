@@ -33,7 +33,9 @@ class IssueAssignmentResource extends Resource
                 ToggleColumn::make('is_approved')
                     ->label('Zatwierdzone')
                     ->afterStateUpdated(function ($record, $state) {
-                        // TODO: do not send the notification when toggling from assigned to not assigned
+                        if (! $state) {
+                            return;
+                        }
                         Notification::make()
                             ->title('Przypisano nowe zgłoszenie w sali "'.$record->issue->room.'"')
                             ->body($record->issue->description)
