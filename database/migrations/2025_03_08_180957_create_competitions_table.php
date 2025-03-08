@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('competitions', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('school_id_number');
-            $table->string('name_with_id')->virtualAs('concat(first_name, \' \', last_name, \' [\', school_id_number, \']\')');
+            $table->string('name');
+            $table->string('scope');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('competitions');
     }
 };

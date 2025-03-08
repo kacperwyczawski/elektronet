@@ -36,7 +36,7 @@ class StudentResource extends Resource
                     ->label('Nazwisko'),
                 Forms\Components\TextInput::make('school_id_number')
                     ->regex('/\d\d\d\d\/\d\d\/\d+/')
-                    ->hint('na przykład: 2020/21/138')
+                    ->helperText('na przykład: 2020/21/138')
                     ->required()
                     ->label('Numer legitymacji'),
             ]);
