@@ -10,8 +10,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ResultsRelationManager extends RelationManager
 {
@@ -33,7 +31,7 @@ class ResultsRelationManager extends RelationManager
                     ->relationship('student', 'name_with_id'),
                 DatePicker::make('date')
                     ->required()
-                    ->label('Data osiągnięcia')
+                    ->label('Data osiągnięcia'),
             ]);
     }
 

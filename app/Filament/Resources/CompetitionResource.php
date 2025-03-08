@@ -3,17 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompetitionResource\Pages;
-use App\Filament\Resources\CompetitionResource\RelationManagers;
 use App\Filament\Resources\CompetitionResource\RelationManagers\ResultsRelationManager;
 use App\Models\Competition;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CompetitionResource extends Resource
 {
