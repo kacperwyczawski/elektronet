@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AchievementsRelationManager extends RelationManager
+class ResultsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'achievements';
+    protected static string $relationship = 'results';
 
     protected static ?string $title = 'Wyniki';
 

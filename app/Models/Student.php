@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    public function achievements()
+    public function results()
     {
-        return $this->hasMany(Achievement::class);
+        return $this->hasMany(Result::class);
     }
 }

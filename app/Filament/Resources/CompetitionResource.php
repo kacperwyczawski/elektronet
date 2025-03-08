@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompetitionResource\Pages;
 use App\Filament\Resources\CompetitionResource\RelationManagers;
-use App\Filament\Resources\CompetitionResource\RelationManagers\AchievementsRelationManager;
+use App\Filament\Resources\CompetitionResource\RelationManagers\ResultsRelationManager;
 use App\Models\Competition;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -77,7 +77,7 @@ class CompetitionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AchievementsRelationManager::class,
+            ResultsRelationManager::class,
         ];
     }
 
