@@ -107,15 +107,15 @@ class StudentResource extends Resource
                     ->label('Nazwisko'),
                 Infolists\Components\TextEntry::make('school_id_number')
                     ->label('Numer legitymacji'),
-                Infolists\Components\RepeatableEntry::make('achievements')
+                Infolists\Components\RepeatableEntry::make('results')
                     ->grid(4)
                     ->columnSpanFull()
                     ->schema([
-                        Infolists\Components\TextEntry::make('name')
-                            ->label('Nazwa'),
                         Infolists\Components\TextEntry::make('result')
                             ->label('Wynik'),
-                        Infolists\Components\TextEntry::make('achieved_at')
+                        Infolists\Components\TextEntry::make('competition.name')
+                            ->label('Nazwa'),
+                        Infolists\Components\TextEntry::make('date')
                             ->label('Data osiągnięcia'),
                     ])
                     ->label('Osiągnięcia'),
