@@ -7,6 +7,6 @@
         Strona szkoły
     </x-filament::button>
     <x-filament::button href="https://portal.vulcan.net.pl/jst/rzeszowprojekt/rejestr.aspx" tag="a" outlined size="xl" target="_blank">
-        Dziennik elektroniczny
+        Dziennik
     </x-filament::button>
 </x-filament-widgets::widget>
