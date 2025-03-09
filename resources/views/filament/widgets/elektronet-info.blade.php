@@ -11,7 +11,7 @@
             </div>
 
             <div class="flex flex-col items-end gap-y-1">
-                <a href="#"
+                <a href="https://github.com/kacperwyczawski/elektronet"
                     class="fi-link group/link relative inline-flex items-center justify-center outline-none fi-size-md fi-link-size-md gap-1.5  fi-color-gray">
                     <svg class="fi-link-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
