@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('school_id_number');
-            $table->string('name_with_id')->virtualAs('concat(first_name, \' \', last_name, \' [\', school_id_number, \']\')');
+            $table->string('name_with_id')->virtualAs('first_name || \' \' || last_name || \' [\' || school_id_number || \']\'');
             $table->timestamps();
         });
     }
