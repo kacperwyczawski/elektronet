@@ -6,6 +6,8 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -69,6 +71,9 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('room')
                     ->label('Sala')
                     ->prefix('Opiekun sali:'),
+                Toggle::make('is_executor')
+                    ->label('Wykonawca')
+                    ->inline(false),
             ]);
     }
 

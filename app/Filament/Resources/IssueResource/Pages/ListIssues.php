@@ -22,17 +22,25 @@ class ListIssues extends ListRecords
 
     public function getTabs(): array
     {
-        return [
-            'all' => Tab::make('Wszystkie'),
+        $tabls = [
             'room' => Tab::make('W Twojej sali')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('room', Auth::user()->room)),
             'your' => Tab::make('Twoje zgłoszenia')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id())),
-            'todo' => Tab::make('Do wykonania')
+        ];
+
+        if (Auth::user()->isExecutor) {
+            $tabls['todo'] = Tab::make('Do wykonania')
                 ->modifyQueryUsing(fn (Builder $query) => $query
                     ->join('issue_assignments', 'issue_assignments.issue_id', '=', 'issues.id')
                     ->where('issue_assignments.user_id', Auth::id())
-                    ->select('issues.*')),
-        ];
+                    ->select('issues.*'));
+        }
+
+        if (Auth::user()->role === 'Dyrektor' || Auth::user()->role === 'Kierownik' || Auth::user()->isExecutor) {
+            $tabls['all'] = Tab::make('Wszystkie');
+        }
+
+        return $tabls;
     }
 }

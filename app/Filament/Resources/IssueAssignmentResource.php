@@ -107,7 +107,7 @@ class IssueAssignmentResource extends Resource
                     ->selectablePlaceholder(false),
                 SelectColumn::make('user_id')
                     ->label('Przypisane do')
-                    ->options(fn () => User::all()
+                    ->options(fn () => User::where('is_executor', true)
                         ->pluck('name', 'id')
                         ->toArray()),
                 TextColumn::make('created_at')

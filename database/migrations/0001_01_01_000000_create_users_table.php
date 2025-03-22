@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('name')->unique();
             $table->string('password');
-            $table->string('role');
+            $table->string('role')->default('Pracownik');
             $table->string('room')->nullable();
             $table->string('full_name')
                 ->virtualAs('first_name || " " || last_name');
+            $table->boolean('is_executor')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
