@@ -17,6 +17,8 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -29,9 +31,6 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->login(Login::class)
             ->profile(EditProfile::class, isSimple: false)
-            ->colors([
-                'primary' => Color::Amber,
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -47,10 +46,6 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
-            ->colors([
-                'primary' => '#d4293d',
-                'danger' => '#d4293d',
-            ])
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->brandLogoHeight('')
             ->databaseNotifications()
