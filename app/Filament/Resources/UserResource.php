@@ -54,6 +54,7 @@ class UserResource extends Resource
                     ->label('Hasło')
                     ->password()
                     ->revealable()
+                    ->hiddenOn('edit')
                     ->required(),
                 Forms\Components\Select::make('role')
                     ->options([
