@@ -10,4 +10,9 @@ class Student extends Model
     {
         return $this->hasMany(Result::class);
     }
+
+    public function formTeacher()
+    {
+        return $this->belongsTo(User::class, 'form_teacher_id');
+    }
 }

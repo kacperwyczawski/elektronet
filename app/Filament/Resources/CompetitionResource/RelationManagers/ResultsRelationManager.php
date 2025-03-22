@@ -28,7 +28,7 @@ class ResultsRelationManager extends RelationManager
                 Select::make('student_id')
                     ->label('Uczeń')
                     ->required()
-                    ->relationship('student', 'name_with_id'),
+                    ->relationship('student', 'full_name'),
                 DatePicker::make('date')
                     ->required()
                     ->label('Data osiągnięcia'),
@@ -48,8 +48,8 @@ class ResultsRelationManager extends RelationManager
                 TextColumn::make('date')
                     ->label('Data')
                     ->date(),
-                TextColumn::make('student.school_id_number')
-                    ->label('Numer legitymacji'),
+                TextColumn::make('student.class_letter')
+                    ->label('Klasa'),
             ])
             ->filters([
                 //

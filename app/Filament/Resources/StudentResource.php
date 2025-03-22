@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Models\Student;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
@@ -34,11 +35,27 @@ class StudentResource extends Resource
                 Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->label('Nazwisko'),
-                Forms\Components\TextInput::make('school_id_number')
-                    ->regex('/\d\d\d\d\/\d\d\/\d+/')
-                    ->helperText('na przykład: 2020/21/138')
-                    ->required()
-                    ->label('Numer legitymacji'),
+                Select::make('form_teacher_id')
+                    ->relationship('formTeacher', 'full_name')
+                    ->label('Wychowawca')
+                    ->required(),
+                Select::make('class_letter')
+                    ->options([
+                        'A' => 'A',
+                        'AE' => 'AE',
+                        'B' => 'B',
+                        'C' => 'C',
+                        'D' => 'D',
+                        'E' => 'E',
+                        'F' => 'F',
+                        'G' => 'G',
+                        'H' => 'H',
+                        'I' => 'I',
+                        'J' => 'J',
+                        'K' => 'K',
+                    ])
+                    ->label('Klasa')
+                    ->required(),
             ]);
     }
 
@@ -52,9 +69,12 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable()
                     ->label('Nazwisko'),
-                Tables\Columns\TextColumn::make('school_id_number')
+                Tables\Columns\TextColumn::make('formTeacher.full_name')
                     ->searchable()
-                    ->label('Numer legitymacji'),
+                    ->label('Wychowawca'),
+                Tables\Columns\TextColumn::make('class_letter')
+                    ->searchable()
+                    ->label('Klasa'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -105,8 +125,10 @@ class StudentResource extends Resource
                     ->label('Imię'),
                 Infolists\Components\TextEntry::make('last_name')
                     ->label('Nazwisko'),
-                Infolists\Components\TextEntry::make('school_id_number')
-                    ->label('Numer legitymacji'),
+                Infolists\Components\TextEntry::make('formTeacher.full_name')
+                    ->label('Wychowawca'),
+                Infolists\Components\TextEntry::make('class_letter')
+                    ->label('Klasa'),
                 Infolists\Components\RepeatableEntry::make('results')
                     ->grid(4)
                     ->columnSpanFull()

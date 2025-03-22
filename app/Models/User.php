@@ -25,6 +25,16 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(IssueAssignment::class);
     }
 
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'form_teacher_id');
+    }
+
+    public function getAbbreviatedName(): string
+    {
+        return $this->name[0] . '. ' . $this->lastName;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

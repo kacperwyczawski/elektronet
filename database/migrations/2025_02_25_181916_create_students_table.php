@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('school_id_number');
-            $table->string('name_with_id')->virtualAs('first_name || \' \' || last_name || \' [\' || school_id_number || \']\'');
+            $table->foreignId('form_teacher_id')
+                ->constrained(
+                    table: 'users',
+                )
+                ->cascadeOnDelete();
+            $table->string('class_letter');
+            $table->string('full_name')->virtualAs('first_name || " " || last_name || " [" || class_letter || "]"');
             $table->timestamps();
         });
     }

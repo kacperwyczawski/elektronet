@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->string('room')->nullable();
+            $table->string('full_name')
+                ->virtualAs('first_name || " " || last_name');
             $table->rememberToken();
             $table->timestamps();
         });
