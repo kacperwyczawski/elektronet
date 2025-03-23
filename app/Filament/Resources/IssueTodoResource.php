@@ -3,19 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\IssueTodoResource\Pages;
-use App\Filament\Resources\IssueTodoResource\RelationManagers;
 use App\Models\Issue;
-use App\Models\IssueTodo;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class IssueTodoResource extends Resource
@@ -60,7 +54,7 @@ class IssueTodoResource extends Resource
                 TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn($state): string => match ($state) {
+                    ->formatStateUsing(fn ($state): string => match ($state) {
                         1 => 'Niski',
                         2 => 'Normalny',
                         3 => 'Wysoki',
@@ -76,7 +70,7 @@ class IssueTodoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 ToggleColumn::make('is_done')
-                    ->label('Zakończone')
+                    ->label('Zakończone'),
             ])
             ->filters([
                 // ...

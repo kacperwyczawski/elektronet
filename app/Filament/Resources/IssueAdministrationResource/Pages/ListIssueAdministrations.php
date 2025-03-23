@@ -3,11 +3,9 @@
 namespace App\Filament\Resources\IssueAdministrationResource\Pages;
 
 use App\Filament\Resources\IssueAdministrationResource;
-use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 
 class ListIssueAdministrations extends ListRecords
 {

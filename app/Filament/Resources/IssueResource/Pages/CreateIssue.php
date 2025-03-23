@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\IssueResource\Pages;
 
 use App\Filament\Resources\IssueResource;
-use App\Models\IssueAssignment;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class CreateIssue extends CreateRecord
