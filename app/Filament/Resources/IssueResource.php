@@ -65,7 +65,7 @@ class IssueResource extends Resource
                         3 => 'Wysoki',
                         default => 'Brak',
                     }),
-                TextEntry::make('assignedTo.name')
+                TextEntry::make('assignedTo.full_name')
                     ->label('Przypisano do'),
                 TextEntry::make('description')
                     ->label('Opis')
@@ -99,7 +99,7 @@ class IssueResource extends Resource
                         default => 'Brak',
                     })
                     ->sortable(),
-                TextColumn::make('assignedTo.name')
+                TextColumn::make('assignedTo.full_name')
                     ->label('Przypisano do')
                     ->searchable(),
                 TextColumn::make('created_at')

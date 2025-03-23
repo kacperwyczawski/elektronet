@@ -53,7 +53,7 @@ class IssueAdministrationResource extends Resource
                 TextColumn::make('description')
                     ->label('Opis')
                     ->searchable(),
-                TextColumn::make('createdBy.name')
+                TextColumn::make('createdBy.full_name')
                     ->label('Zgłoszone przez')
                     ->searchable(),
                 SelectColumn::make('priority')
@@ -67,7 +67,7 @@ class IssueAdministrationResource extends Resource
                 SelectColumn::make('assigned_to_id')
                     ->label('Przypisane do')
                     ->options(fn () => User::where('is_executor', true)
-                        ->pluck('name', 'id')
+                        ->pluck('full_name', 'id')
                         ->toArray())
                     ->afterStateUpdated(function ($record) {
                         if (! $record->is_approved || ! $record->assignedTo) {
