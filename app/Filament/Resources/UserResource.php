@@ -100,9 +100,6 @@ class UserResource extends Resource
                         'Dyrektor' => 'info',
                         default => 'gray',
                     }),
-                TextColumn::make('room')
-                    ->label('Sala')
-                    ->searchable(),
                 IconColumn::make('is_executor')
                     ->label('Wykonawca')
                     ->boolean(),
