@@ -47,12 +47,12 @@ class IssueResource extends Resource
     {
         return $infolist
             ->schema([
-                IconEntry::make('assignment.is_approved')
+                IconEntry::make('is_approved')
                     ->label('Zatwierdzone')
                     ->boolean(),
                 TextEntry::make('room')
                     ->label('Sala'),
-                TextEntry::make('assignment.priority')
+                TextEntry::make('priority')
                     ->label('Priorytet')
                     ->badge()
                     ->formatStateUsing(fn ($state): string => match ($state) {
@@ -61,7 +61,7 @@ class IssueResource extends Resource
                         3 => 'Wysoki',
                         default => 'Brak',
                     }),
-                TextEntry::make('assignment.user.name')
+                TextEntry::make('assignedTo.name')
                     ->label('Przypisano do'),
                 TextEntry::make('description')
                     ->label('Opis')
@@ -74,7 +74,7 @@ class IssueResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('assignment.is_approved')
+                IconColumn::make('is_approved')
                     ->label('Zatwierdzone')
                     ->boolean(),
                 TextColumn::make('room')
@@ -85,7 +85,7 @@ class IssueResource extends Resource
                     ->wrap()
                     ->lineClamp(2)
                     ->searchable(),
-                TextColumn::make('assignment.priority')
+                TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
                     ->formatStateUsing(fn ($state): string => match ($state) {
@@ -95,7 +95,7 @@ class IssueResource extends Resource
                         default => 'Brak',
                     })
                     ->sortable(),
-                TextColumn::make('assignment.user.name')
+                TextColumn::make('assignedTo.name')
                     ->label('Przypisano do')
                     ->searchable(),
                 TextColumn::make('created_at')
