@@ -16,6 +16,8 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class IssueResource extends Resource
 {
@@ -24,6 +26,8 @@ class IssueResource extends Resource
     protected static ?string $modelLabel = 'zgłoszenie';
 
     protected static ?string $pluralModelLabel = 'zgłoszenia';
+
+    protected static ?string $navigationLabel = 'Twoje zgłoszenia';
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
@@ -134,5 +138,11 @@ class IssueResource extends Resource
             'view' => Pages\ViewIssue::route('/{record}'),
             'edit' => Pages\EditIssue::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('created_by_id', Auth::id());
     }
 }
