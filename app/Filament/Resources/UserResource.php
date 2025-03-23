@@ -12,6 +12,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -105,6 +106,9 @@ class UserResource extends Resource
                 TextColumn::make('room')
                     ->label('Sala')
                     ->searchable(),
+                IconColumn::make('is_executor')
+                    ->label('Wykonawca')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
