@@ -68,9 +68,6 @@ class UserResource extends Resource
                     ->selectablePlaceholder(false)
                     ->label('Rola')
                     ->required(),
-                Forms\Components\TextInput::make('room')
-                    ->label('Sala')
-                    ->prefix('Opiekun sali:'),
                 Toggle::make('is_executor')
                     ->label('Wykonawca')
                     ->inline(false),

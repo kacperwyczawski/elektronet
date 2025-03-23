@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('room');
             $table->string('description');
             $table->foreignId('created_by_id')
                 ->constrained('users')
