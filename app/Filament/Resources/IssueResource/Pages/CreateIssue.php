@@ -10,22 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateIssue extends CreateRecord
 {
+    protected static string $resource = IssueResource::class;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['user_id'] = Auth::id();
+        $data['created_by_id'] = Auth::id();
 
         return $data;
     }
-
-    protected function handleRecordCreation(array $data): Model
-    {
-        $assignment = new IssueAssignment;
-        $issue = static::getModel()::create($data);
-        $assignment->issue_id = $issue->id;
-        $assignment->save();
-
-        return $issue;
-    }
-
-    protected static string $resource = IssueResource::class;
 }

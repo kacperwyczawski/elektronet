@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function assignment()
+    public function assignedTo()
     {
-        return $this->hasOne(IssueAssignment::class);
+        return $this->belongsTo(User::class, 'assigned_to_id');
     }
 }

@@ -15,24 +15,19 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    public function issues()
+    public function createdIssues()
     {
-        return $this->hasMany(Issue::class);
+        return $this->hasMany(Issue::class, 'created_by_id');
     }
 
     public function assignedIssues()
     {
-        return $this->hasMany(IssueAssignment::class);
+        return $this->hasMany(Issue::class, 'assigned_to_id');
     }
 
     public function students()
     {
         return $this->hasMany(Student::class, 'form_teacher_id');
-    }
-
-    public function getAbbreviatedName(): string
-    {
-        return $this->name[0] . '. ' . $this->lastName;
     }
 
     /**
