@@ -13,7 +13,10 @@ use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class IssueAdministrationResource extends Resource
@@ -120,10 +123,12 @@ class IssueAdministrationResource extends Resource
                     ->label('Zakończone'),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Wykonane'),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -144,5 +149,13 @@ class IssueAdministrationResource extends Resource
         return [
             'index' => Pages\ListIssueAdministrations::route('/'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

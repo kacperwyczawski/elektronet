@@ -4,6 +4,8 @@ namespace App\Filament\Resources\IssueResource\Pages;
 
 use App\Filament\Resources\IssueResource;
 use Filament\Actions;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditIssue extends EditRecord
@@ -15,6 +17,8 @@ class EditIssue extends EditRecord
         return [
             Actions\ViewAction::make(),
             Actions\DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 }
