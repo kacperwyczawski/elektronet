@@ -30,6 +30,13 @@ return new class extends Migration
                 ->default(false);
             $table->boolean('is_done')
                 ->default(false);
+            // room reservations
+            $table->boolean('is_reservation')
+                ->default(false);
+            $table->json('hours')
+                ->nullable();
+            $table->date('reservation_date')
+                ->nullable();
         });
     }
 

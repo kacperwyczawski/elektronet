@@ -6,6 +6,7 @@ use App\Filament\Resources\IssueTodoResource\Pages;
 use App\Models\Issue;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
@@ -51,6 +52,15 @@ class IssueTodoResource extends Resource
                     ->wrap()
                     ->lineClamp(2)
                     ->searchable(),
+                ColumnGroup::make('Rezerwacja')
+                    ->columns([
+                        TextColumn::make('reservation_date')
+                            ->label('Data rezerwacji')
+                            ->sortable(),
+                        TextColumn::make('hours')
+                            ->badge()
+                            ->label('Godziny'),
+                    ]),
                 TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()

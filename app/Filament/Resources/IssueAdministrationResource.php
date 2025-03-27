@@ -10,6 +10,7 @@ use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -59,6 +60,15 @@ class IssueAdministrationResource extends Resource
                 TextColumn::make('createdBy.full_name')
                     ->label('Zgłoszone przez')
                     ->searchable(),
+                ColumnGroup::make('Rezerwacja')
+                    ->columns([
+                        TextColumn::make('reservation_date')
+                            ->label('Data rezerwacji')
+                            ->sortable(),
+                        TextColumn::make('hours')
+                            ->badge()
+                            ->label('Godziny'),
+                    ]),
                 SelectColumn::make('priority')
                     ->label('Priorytet')
                     ->options([
@@ -88,39 +98,42 @@ class IssueAdministrationResource extends Resource
                             ])
                             ->sendToDatabase($record->assignedTo);
                     }),
-                ToggleColumn::make('is_approved')
-                    ->label('Zatwierdzone')
-                    ->afterStateUpdated(function ($record, $state) {
-                        if (! $state) {
-                            return;
-                        }
-                        if ($record->assignedTo) {
-                            Notification::make()
-                                ->title('Przypisano nowe zgłoszenie w sali "'.$record->room.'"')
-                                ->body($record->description)
-                                ->info()
-                                ->actions([
-                                    Action::make('view')
-                                        ->label('Zobacz')
-                                        ->url(route('filament.admin.resources.issues.view', $record))
-                                        ->button(),
-                                ])
-                                ->sendToDatabase($record->assignedTo);
-                        }
-                        Notification::make()
-                            ->title('Twoje zgłoszenie w sali "'.$record->room.'" zostało zatwierdzone')
-                            ->body($record->description)
-                            ->success()
-                            ->actions([
-                                Action::make('view')
-                                    ->label('Zobacz')
-                                    ->url(route('filament.admin.resources.issues.view', $record))
-                                    ->button(),
-                            ])
-                            ->sendToDatabase($record->createdBy);
-                    }),
-                ToggleColumn::make('is_done')
-                    ->label('Zakończone'),
+                ColumnGroup::make('Status')
+                    ->columns([
+                        ToggleColumn::make('is_approved')
+                            ->label('Zatwierdzone')
+                            ->afterStateUpdated(function ($record, $state) {
+                                if (! $state) {
+                                    return;
+                                }
+                                if ($record->assignedTo) {
+                                    Notification::make()
+                                        ->title('Przypisano nowe zgłoszenie w sali "'.$record->room.'"')
+                                        ->body($record->description)
+                                        ->info()
+                                        ->actions([
+                                            Action::make('view')
+                                                ->label('Zobacz')
+                                                ->url(route('filament.admin.resources.issues.view', $record))
+                                                ->button(),
+                                        ])
+                                        ->sendToDatabase($record->assignedTo);
+                                }
+                                Notification::make()
+                                    ->title('Twoje zgłoszenie w sali "'.$record->room.'" zostało zatwierdzone')
+                                    ->body($record->description)
+                                    ->success()
+                                    ->actions([
+                                        Action::make('view')
+                                            ->label('Zobacz')
+                                            ->url(route('filament.admin.resources.issues.view', $record))
+                                            ->button(),
+                                    ])
+                                    ->sendToDatabase($record->createdBy);
+                            }),
+                        ToggleColumn::make('is_done')
+                            ->label('Zakończone'),
+                    ]),
             ])
             ->filters([
                 TrashedFilter::make(),

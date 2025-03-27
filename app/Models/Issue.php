@@ -18,4 +18,11 @@ class Issue extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
     }
+
+    protected function casts()
+    {
+        return [
+            'hours' => 'array',
+        ];
+    }
 }
