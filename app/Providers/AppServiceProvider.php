@@ -23,9 +23,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        FilamentColor::register(fn () => [
-            'primary' => Auth::user()?->name == 'elzcze' ? '#5992ca' : '#d4293d',
-            'danger' => '#d4293d',
-        ]);
     }
 }
