@@ -37,6 +37,8 @@ class StudentResource extends Resource
                     ->label('Nazwisko'),
                 Select::make('form_teacher_id')
                     ->relationship('formTeacher', 'full_name')
+                    ->searchable()
+                    ->preload()
                     ->label('Wychowawca')
                     ->required(),
                 Select::make('class_letter')

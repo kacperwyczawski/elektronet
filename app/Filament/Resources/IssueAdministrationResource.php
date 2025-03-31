@@ -140,7 +140,7 @@ class IssueAdministrationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make()
-                    ->label('Wykonane'),
+                    ->label('Usuń'),
                 Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([

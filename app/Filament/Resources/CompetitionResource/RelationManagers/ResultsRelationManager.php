@@ -28,6 +28,7 @@ class ResultsRelationManager extends RelationManager
                 Select::make('student_id')
                     ->label('Uczeń')
                     ->required()
+                    ->searchable()
                     ->relationship('student', 'full_name'),
                 DatePicker::make('date')
                     ->required()
