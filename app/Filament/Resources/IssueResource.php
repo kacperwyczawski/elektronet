@@ -4,11 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\IssueResource\Pages;
 use App\Models\Issue;
+use App\Models\Room;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Infolists\Components\IconEntry;
@@ -46,8 +48,11 @@ class IssueResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('room')
+                Select::make('room_id')
+                    ->relationship('room', 'name')
                     ->label('sala')
+                    ->searchable()
+                    ->preload()
                     ->live()
                     ->required(),
                 Forms\Components\Textarea::make('description')
@@ -84,13 +89,13 @@ class IssueResource extends Resource
                         ];
 
                         $date = $get('reservation_date');
-                        $room = $get('room');
+                        $room = $get('room_id');
                         if (! $date || ! $room) {
                             return [];
                         }
 
                         $reserved = Issue::whereDate('reservation_date', $date)
-                            ->where('room', $room)
+                            ->where('room_id', $room)
                             ->pluck('hours')
                             ->flatten()
                             ->unique()
@@ -110,7 +115,7 @@ class IssueResource extends Resource
                 IconEntry::make('is_approved')
                     ->label('Zatwierdzone')
                     ->boolean(),
-                TextEntry::make('room')
+                TextEntry::make('room.name')
                     ->label('Sala'),
                 TextEntry::make('priority')
                     ->label('Priorytet')
@@ -137,7 +142,7 @@ class IssueResource extends Resource
                 IconColumn::make('is_approved')
                     ->label('Zatwierdzone')
                     ->boolean(),
-                TextColumn::make('room')
+                TextColumn::make('room.name')
                     ->label('Sala')
                     ->searchable(),
                 TextColumn::make('description')

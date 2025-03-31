@@ -677,5 +677,176 @@ class DatabaseSeeder extends Seeder
                 'role' => 'Pracownik',
             ],
         ]);
+
+        DB::table('rooms')->insert([
+            [
+                'name' => '0.3',
+                'description' => null
+            ],
+            [
+                'name' => '0.5',
+                'description' => 'Sala religii',
+            ],
+            [
+                'name' => '0.8',
+                'description' => 'Sala przedsiębiorczości',
+            ],
+            [
+                'name' => '1',
+                'description' => 'Sala matematyki',
+            ],
+            [
+                'name' => '2',
+                'description' => 'Sala automatyki',
+            ],
+            [
+                'name' => '3',
+                'description' => 'Sala elektroniki',
+            ],
+            [
+                'name' => '203',
+                'description' => 'Sala chemii',
+            ],
+            [
+                'name' => '204',
+                'description' => 'Sala historii',
+            ],
+            [
+                'name' => '205',
+                'description' => 'Sala fizyki',
+            ],
+            [
+                'name' => '206',
+                'description' => 'Sala fizyki',
+            ],
+            [
+                'name' => '208',
+                'description' => 'Sala j.polskiego',
+            ],
+            [
+                'name' => '209',
+                'description' => 'Sala j.polskiego',
+            ],
+            [
+                'name' => '210',
+                'description' => 'Sala geografii i historii',
+            ],
+            [
+                'name' => '211',
+                'description' => 'Sala matematyki',
+            ],
+            [
+                'name' => '212',
+                'description' => 'Sala matematyki',
+            ],
+            [
+                'name' => '213',
+                'description' => 'Sala j.polskiego',
+            ],
+            [
+                'name' => '110h',
+                'description' => 'Sala historii',
+            ],
+            [
+                'name' => '4',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '4a',
+                'description' => 'Pracownia oprogramowania',
+            ],
+            [
+                'name' => '12',
+                'description' => 'Sala biologii',
+            ],
+            [
+                'name' => '18',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '19',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '104',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '105',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '110',
+                'description' => 'Pracownia systemów operacyjnych',
+            ],
+            [
+                'name' => '112',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '113',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '113a',
+                'description' => 'Pracownia informatyczna',
+            ],
+            [
+                'name' => '102h',
+                'description' => 'Sala językowa',
+            ],
+            [
+                'name' => '112h',
+                'description' => 'Sala językowa',
+            ],
+            [
+                'name' => '110a',
+                'description' => 'Sala językowa',
+            ],
+            [
+                'name' => '207',
+                'description' => 'Sala językowa',
+            ],
+            [
+                'name' => '4c',
+                'description' => 'Pracownia urządzeń elektronicznych',
+            ],
+            [
+                'name' => '4d',
+                'description' => 'Pracownia urządzeń elektronicznych',
+            ],
+            [
+                'name' => '107',
+                'description' => 'Pracownia automatyki',
+            ],
+            [
+                'name' => '106',
+                'description' => 'Pracownia automatyki',
+            ],
+            [
+                'name' => '111',
+                'description' => 'Pracownia elektryczna',
+            ],
+            [
+                'name' => 'hala',
+                'description' => null,
+            ],
+            [
+                'name' => 'stara hala',
+                'description' => null,
+            ],
+            [
+                'name' => 'aula',
+                'description' => null,
+            ],
+            [
+                'name' => 'czytelnia',
+                'description' => 'Biblioteka',
+            ],
+            [
+                'name' => 'siłownia',
+                'description' => null,
+            ],
+        ]);
     }
 }

@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->string('room');
+            $table->foreignId('room_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('description');
             $table->foreignId('created_by_id')
                 ->constrained('users')

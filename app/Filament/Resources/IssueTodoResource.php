@@ -44,7 +44,7 @@ class IssueTodoResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('room')
+                TextColumn::make('room.name')
                     ->label('Sala')
                     ->searchable(),
                 TextColumn::make('description')

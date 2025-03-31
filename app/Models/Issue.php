@@ -19,6 +19,11 @@ class Issue extends Model
         return $this->belongsTo(User::class, 'assigned_to_id');
     }
 
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
     protected function casts()
     {
         return [

@@ -51,7 +51,7 @@ class IssueAdministrationResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('room')
+                TextColumn::make('room.name')
                     ->label('Sala')
                     ->searchable(),
                 TextColumn::make('description')
@@ -87,7 +87,7 @@ class IssueAdministrationResource extends Resource
                             return;
                         }
                         Notification::make()
-                            ->title('Przypisano nowe zgłoszenie w sali "'.$record->room.'"')
+                            ->title('Przypisano nowe zgłoszenie w sali "'.$record->room->name.'"')
                             ->body($record->description)
                             ->info()
                             ->actions([
@@ -108,7 +108,7 @@ class IssueAdministrationResource extends Resource
                                 }
                                 if ($record->assignedTo) {
                                     Notification::make()
-                                        ->title('Przypisano nowe zgłoszenie w sali "'.$record->room.'"')
+                                        ->title('Przypisano nowe zgłoszenie w sali "'.$record->room->name.'"')
                                         ->body($record->description)
                                         ->info()
                                         ->actions([
@@ -120,7 +120,7 @@ class IssueAdministrationResource extends Resource
                                         ->sendToDatabase($record->assignedTo);
                                 }
                                 Notification::make()
-                                    ->title('Twoje zgłoszenie w sali "'.$record->room.'" zostało zatwierdzone')
+                                    ->title('Twoje zgłoszenie w sali "'.$record->room->name.'" zostało zatwierdzone')
                                     ->body($record->description)
                                     ->success()
                                     ->actions([
