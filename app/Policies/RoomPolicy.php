@@ -4,13 +4,12 @@ namespace App\Policies;
 
 use App\Models\Room;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class RoomPolicy
 {
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->role == 'Dyrektor' || $user->role == 'Kierownik') {
+        if ($user->is_admin) {
             return true;
         }
 
