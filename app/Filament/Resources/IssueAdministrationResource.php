@@ -36,7 +36,7 @@ class IssueAdministrationResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()->role === 'Dyrektor' || Auth::user()->role === 'Kierownik';
+        return Auth::user()->is_admin;
     }
 
     public static function form(Form $form): Form
