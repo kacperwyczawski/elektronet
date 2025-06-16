@@ -15,6 +15,5 @@ COPY . /app
 RUN composer install --no-dev --optimize-autoloader
 RUN cp .env.example .env
 RUN php artisan key:generate
-RUN php artisan migrate
 
 EXPOSE 80
