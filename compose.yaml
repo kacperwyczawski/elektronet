@@ -1,12 +1,21 @@
+# for Portainer
 services:
   app:
-    build:
-      context: .
-    ports:
-      - "80:80"
-      - "443:443"
+    image: ghcr.io/kacperwyczawski/elektronet:main
     volumes:
-      - database:/app/database
+      - database:/app/volume
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elektronet.rule=Host(`elektronet.zse.rzeszow.pl`)"
+      - "traefik.http.services.elektronet.loadbalancer.server.port=80"
+    networks:
+        - traefik
+      
+networks:
+  traefik:
+    name: traefik_proxy
+    external: true
 
 volumes:
   database:
