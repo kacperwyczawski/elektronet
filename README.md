@@ -16,8 +16,7 @@ Po wprowadzeniu zmian w kodzie, należy wysłać mi pull request. Po zatwierdzen
 
 - Zainstaluj potrzebne narzędzia
 - Stwórz i zaninicjalizuj bazę danych: `php artisan migrate:fresh --seed` (pojawi się konto `kacwyc` z hasłem `admin`)
-- Ustaw zmienną środowiskową `APP_LOCALE` na `pl` (można to zrobić w pliku `.env`)
-- Ustaw zmienną środowiskową `APP_NAME` na `Elektronet`
+- Ustaw zmienne środowiskowe, tak jak w Dockerfile (np. `APP_LOCALE` na `pl`) (można to zrobić w pliku `.env`)
 
 ## Kontakt
 
