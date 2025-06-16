@@ -4,14 +4,17 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
-use Filament\Forms;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -31,13 +34,9 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make("first_name")
-                ->label("Imię")
-                ->required(),
-            Forms\Components\TextInput::make("last_name")
-                ->label("Nazwisko")
-                ->required(),
-            Forms\Components\TextInput::make("name")
+            TextInput::make("first_name")->label("Imię")->required(),
+            TextInput::make("last_name")->label("Nazwisko")->required(),
+            TextInput::make("name")
                 ->label("Nazwa użytkownika")
                 ->suffixAction(
                     Action::make("generateName")
@@ -52,12 +51,13 @@ class UserResource extends Resource
                         })
                 )
                 ->required(),
-            Forms\Components\TextInput::make("password")
+            TextInput::make("password")
                 ->label("Hasło")
                 ->password()
                 ->revealable()
                 ->hiddenOn("edit")
                 ->required(),
+            TextInput::make("job_title")->label("Stanowisko"),
             Toggle::make("is_admin")->label("Admin")->inline(false),
             Toggle::make("is_executor")->label("Wykonawca")->inline(false),
         ]);
@@ -69,22 +69,29 @@ class UserResource extends Resource
             ->defaultSort("is_admin", "desc")
             ->groupingSettingsHidden(true)
             ->columns([
-                Tables\Columns\TextColumn::make("first_name")
-                    ->label("Imię")
-                    ->searchable(),
-                Tables\Columns\TextColumn::make("last_name")
-                    ->label("Nazwisko")
-                    ->searchable(),
-                Tables\Columns\TextColumn::make("name")
+                TextColumn::make("first_name")->label("Imię")->searchable(),
+                TextColumn::make("last_name")->label("Nazwisko")->searchable(),
+                TextColumn::make("name")
                     ->label("Nazwa użytkownika")
                     ->searchable(),
                 IconColumn::make("is_admin")->label("Admin")->boolean(),
                 IconColumn::make("is_executor")->label("Wykonawca")->boolean(),
-                Tables\Columns\TextColumn::make("created_at")
+                TextColumn::make("created_at")
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make("updated_at")
+                TextColumn::make("job_title")
+                    ->label("Stanowisko")
+                    ->searchable()
+                    ->badge()
+                    ->color(
+                        fn(string $state): string => match ($state) {
+                            "Kierownik" => "primary",
+                            "Dyrektor" => "info",
+                            default => "gray",
+                        }
+                    ),
+                TextColumn::make("updated_at")
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -92,12 +99,8 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([Tables\Actions\EditAction::make()])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->actions([EditAction::make()])
+            ->bulkActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
     }
 
     public static function getRelations(): array
