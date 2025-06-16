@@ -78,6 +78,8 @@ class UserResource extends Resource
                     "Księgowa" => "Księgowa",
                     "Specjalista" => "Specjalista",
                     "Higienistka" => "Higienistka",
+                    "Kierownik" => "Kierownik",
+                    "Inne" => "Inne",
                 ])
                 ->required(),
             Toggle::make("is_admin")->label("Admin")->inline(false),
