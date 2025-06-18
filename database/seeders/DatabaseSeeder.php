@@ -594,7 +594,7 @@ class DatabaseSeeder extends Seeder
         DB::table('rooms')->insert([
             [
                 'name' => '0.3',
-                'description' => null
+                'description' => null,
             ],
             [
                 'name' => '0.5',

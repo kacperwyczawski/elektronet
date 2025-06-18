@@ -79,7 +79,8 @@ class IssueAdministrationResource extends Resource
                     ->selectablePlaceholder(false),
                 SelectColumn::make('assigned_to_id')
                     ->label('Przypisane do')
-                    ->options(fn () => User::where('is_executor', true)
+                    ->options(fn () => User::query()
+                        ->where('is_executor', true)
                         ->pluck('full_name', 'id')
                         ->toArray())
                     ->afterStateUpdated(function ($record) {
