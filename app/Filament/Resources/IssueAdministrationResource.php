@@ -5,15 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IssueAdministrationResource\Pages;
 use App\Models\Issue;
 use App\Models\User;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ColumnGroup;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -61,91 +60,83 @@ class IssueAdministrationResource extends Resource
                         ->sortable(),
                     TextColumn::make('hours')->badge()->label('Godziny'),
                 ]),
-                SelectColumn::make('priority')
-                    ->label('Priorytet')
-                    ->options([
-                        1 => 'Niski',
-                        2 => 'Normalny',
-                        3 => 'Wysoki',
+                Tables\Columns\ToggleColumn::make('is_done')->label(
+                    'Zakończone'
+                ),
+            ])
+            ->filters([TrashedFilter::make()])
+            ->actions([
+                Tables\Actions\Action::make('assign')
+                    ->label('Przypisz')
+                    ->icon('heroicon-o-user-plus')
+                    ->form([
+                        Select::make('priority')
+                            ->label('Priorytet')
+                            ->options([
+                                1 => 'Niski',
+                                2 => 'Normalny',
+                                3 => 'Wysoki',
+                            ])
+                            ->default(2)
+                            ->selectablePlaceholder(false)
+                            ->required(),
+                        Select::make('assigned_to_id')
+                            ->label('Przypisane do')
+                            ->options(
+                                fn () => User::query()
+                                    ->where('is_executor', true)
+                                    ->pluck('full_name', 'id')
+                                    ->toArray()
+                            )
+                            ->searchable()
+                            ->required(),
                     ])
-                    ->selectablePlaceholder(false),
-                SelectColumn::make('assigned_to_id')
-                    ->label('Przypisane do')
-                    ->options(fn () => User::query()
-                        ->where('is_executor', true)
-                        ->pluck('full_name', 'id')
-                        ->toArray())
-                    ->afterStateUpdated(function ($record) {
-                        if (! $record->is_approved || ! $record->assignedTo) {
-                            return;
-                        }
+                    ->action(function (array $data, Issue $record) {
+                        $record->priority = $data['priority'];
+                        $record->assigned_to_id = $data['assigned_to_id'];
+                        $record->save();
+
                         Notification::make()
-                            ->title('Przypisano nowe zgłoszenie w sali "'.$record->room->name.'"')
+                            ->title(
+                                'Przypisano nowe zgłoszenie w sali "'.
+                                    $record->room->name.
+                                    '"'
+                            )
                             ->body($record->description)
                             ->info()
                             ->actions([
                                 Action::make('view')
                                     ->label('Zobacz')
-                                    ->url(route('filament.admin.resources.issues.view', $record))
+                                    ->url(
+                                        route(
+                                            'filament.admin.resources.issues.view',
+                                            $record
+                                        )
+                                    )
                                     ->button(),
                             ])
                             ->sendToDatabase($record->assignedTo);
-                    }),
-                ColumnGroup::make('Status')->columns([
-                    ToggleColumn::make('is_approved')
-                        ->label('Zatwierdzone')
-                        ->afterStateUpdated(function ($record, $state) {
-                            if (! $state) {
-                                return;
-                            }
-                            if ($record->assignedTo) {
-                                Notification::make()
-                                    ->title(
-                                        'Przypisano nowe zgłoszenie w sali "'.
-                                            $record->room->name.
-                                            '"'
-                                    )
-                                    ->body($record->description)
-                                    ->info()
-                                    ->actions([
-                                        Action::make('view')
-                                            ->label('Zobacz')
-                                            ->url(
-                                                route(
-                                                    'filament.admin.resources.issues.view',
-                                                    $record
-                                                )
-                                            )
-                                            ->button(),
-                                    ])
-                                    ->sendToDatabase($record->assignedTo);
-                            }
-                            Notification::make()
-                                ->title(
-                                    'Twoje zgłoszenie w sali "'.
-                                        $record->room->name.
-                                        '" zostało zatwierdzone'
-                                )
-                                ->body($record->description)
-                                ->success()
-                                ->actions([
-                                    Action::make('view')
-                                        ->label('Zobacz')
-                                        ->url(
-                                            route(
-                                                'filament.admin.resources.issues.view',
-                                                $record
-                                            )
+                        Notification::make()
+                            ->title(
+                                'Twoje zgłoszenie w sali "'.
+                                    $record->room->name.
+                                    '" zostało zatwierdzone i przypisane'
+                            )
+                            ->body($record->description)
+                            ->success()
+                            ->actions([
+                                Action::make('view')
+                                    ->label('Zobacz')
+                                    ->url(
+                                        route(
+                                            'filament.admin.resources.issues.view',
+                                            $record
                                         )
-                                        ->button(),
-                                ])
-                                ->sendToDatabase($record->createdBy);
-                        }),
-                    ToggleColumn::make('is_done')->label('Zakończone'),
-                ]),
-            ])
-            ->filters([TrashedFilter::make()])
-            ->actions([
+                                    )
+                                    ->button(),
+                            ])
+                            ->sendToDatabase($record->createdBy);
+                    }),
                 Tables\Actions\DeleteAction::make()->label('Usuń'),
                 Tables\Actions\RestoreAction::make(),
             ])
