@@ -8,7 +8,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -34,42 +33,38 @@ class IssueTodoResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            //
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('room.name')
-                    ->label('Sala')
-                    ->searchable(),
+                TextColumn::make('room.name')->label('Sala')->searchable(),
                 TextColumn::make('description')
                     ->label('Opis')
                     ->wrap()
                     ->lineClamp(2)
                     ->searchable(),
-                ColumnGroup::make('Rezerwacja')
-                    ->columns([
-                        TextColumn::make('reservation_date')
-                            ->label('Data rezerwacji')
-                            ->sortable(),
-                        TextColumn::make('hours')
-                            ->badge()
-                            ->label('Godziny'),
-                    ]),
+                ColumnGroup::make('Rezerwacja')->columns([
+                    TextColumn::make('reservation_date')
+                        ->label('Data rezerwacji')
+                        ->sortable(),
+                    TextColumn::make('hours')->badge()->label('Godziny'),
+                ]),
                 TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn ($state): string => match ($state) {
-                        1 => 'Niski',
-                        2 => 'Normalny',
-                        3 => 'Wysoki',
-                        default => 'Brak',
-                    })
+                    ->formatStateUsing(
+                        fn ($state): string => match ($state) {
+                            1 => 'Niski',
+                            2 => 'Normalny',
+                            3 => 'Wysoki',
+                            default => 'Brak',
+                        }
+                    )
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -79,14 +74,20 @@ class IssueTodoResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                ToggleColumn::make('is_done')
-                    ->label('Zakończone'),
             ])
             ->filters([
                 // ...
             ])
-            ->actions([
-                // ...
+            ->actions([\Filament\Tables\Actions\Action::make('mark-done')
+                ->label('Wykonane')
+                ->icon('heroicon-m-check-circle')
+                ->color('success')
+                ->visible(fn (Issue $record) => ! $record->is_done)
+                ->requiresConfirmation()
+                ->action(function (Issue $record) {
+                    $record->is_done = true;
+                    $record->save();
+                }),
             ])
             ->bulkActions([
                 // ...
@@ -95,9 +96,7 @@ class IssueTodoResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->where('assigned_to_id', Auth::id())
-            ->where('is_approved', true);
+        return parent::getEloquentQuery()->where('assigned_to_id', Auth::id());
     }
 
     public static function getRelations(): array

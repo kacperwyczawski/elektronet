@@ -27,14 +27,14 @@ class ListIssueTodos extends ListRecords
                     Issue::query()
                         ->where('is_done', false)
                         ->where('assigned_to_id', Auth::id())
-                        ->where('is_approved', true)->count()),
+                        ->count()),
             'pending_confirmation' => Tab::make('Oczekujące na potwierdzenie')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('is_done', true))
                 ->badge(
                     Issue::query()
                         ->where('is_done', true)
                         ->where('assigned_to_id', Auth::id())
-                        ->where('is_approved', true)->count()),
+                        ->count()),
         ];
     }
 }

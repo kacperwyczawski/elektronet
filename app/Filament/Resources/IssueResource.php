@@ -93,7 +93,7 @@ class IssueResource extends Resource
                             return [];
                         }
 
-                        $reserved = Issue::whereDate('reservation_date', $date)
+                        $reserved = Issue::query()->whereDate('reservation_date', $date)
                             ->where('room_id', $room)
                             ->pluck('hours')
                             ->flatten()

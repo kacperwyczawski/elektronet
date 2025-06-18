@@ -7,10 +7,10 @@ use App\Models\Issue;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
-use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -60,15 +60,15 @@ class IssueAdministrationResource extends Resource
                         ->sortable(),
                     TextColumn::make('hours')->badge()->label('Godziny'),
                 ]),
-                Tables\Columns\ToggleColumn::make('is_done')->label(
-                    'Zakończone'
-                ),
             ])
             ->filters([TrashedFilter::make()])
             ->actions([
-                Tables\Actions\Action::make('assign')
+                Action::make('assign')
                     ->label('Przypisz')
-                    ->icon('heroicon-o-user-plus')
+                    ->icon('heroicon-m-user-plus')
+                    ->visible(
+                        fn (Issue $record) => $record->assigned_to_id === null
+                    )
                     ->form([
                         Select::make('priority')
                             ->label('Priorytet')
@@ -105,7 +105,9 @@ class IssueAdministrationResource extends Resource
                             ->body($record->description)
                             ->info()
                             ->actions([
-                                Action::make('view')
+                                \Filament\Notifications\Actions\Action::make(
+                                    'view'
+                                )
                                     ->label('Zobacz')
                                     ->url(
                                         route(
@@ -125,7 +127,9 @@ class IssueAdministrationResource extends Resource
                             ->body($record->description)
                             ->success()
                             ->actions([
-                                Action::make('view')
+                                \Filament\Notifications\Actions\Action::make(
+                                    'view'
+                                )
                                     ->label('Zobacz')
                                     ->url(
                                         route(
@@ -137,7 +141,43 @@ class IssueAdministrationResource extends Resource
                             ])
                             ->sendToDatabase($record->createdBy);
                     }),
-                Tables\Actions\DeleteAction::make()->label('Usuń'),
+                Action::make('cancel-assignment')
+                    ->label('Anuluj przypisanie')
+                    ->icon('heroicon-m-x-circle')
+                    ->visible(
+                        fn (Issue $record) => $record->assigned_to_id !== null &&
+                            ! $record->is_done
+                    )
+                    ->requiresConfirmation()
+                    ->action(function (Issue $record) {
+                        $record->assigned_to_id = null;
+                        $record->save();
+
+                        Notification::make()
+                            ->title(
+                                'Przypisanie zgłoszenia w sali "'.
+                                    $record->room->name.
+                                    '" zostało anulowane'
+                            )
+                            ->body($record->description)
+                            ->warning()
+                            ->actions([
+                                \Filament\Notifications\Actions\Action::make(
+                                    'view'
+                                )
+                                    ->label('Zobacz')
+                                    ->url(
+                                        route(
+                                            'filament.admin.resources.issues.view',
+                                            $record
+                                        )
+                                    )
+                                    ->button(),
+                            ])
+                            ->sendToDatabase($record->createdBy);
+                    }),
+
+                Tables\Actions\DeleteAction::make()->label('Zakończ'),
                 Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
