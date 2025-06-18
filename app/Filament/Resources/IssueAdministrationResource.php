@@ -41,34 +41,26 @@ class IssueAdministrationResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            //
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('room.name')
-                    ->label('Sala')
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->label('Opis')
-                    ->searchable(),
+                TextColumn::make('room.name')->label('Sala')->searchable(),
+                TextColumn::make('description')->label('Opis')->searchable(),
                 TextColumn::make('createdBy.full_name')
                     ->label('Zgłoszone przez')
                     ->searchable(),
-                ColumnGroup::make('Rezerwacja')
-                    ->columns([
-                        TextColumn::make('reservation_date')
-                            ->label('Data rezerwacji')
-                            ->sortable(),
-                        TextColumn::make('hours')
-                            ->badge()
-                            ->label('Godziny'),
-                    ]),
+                ColumnGroup::make('Rezerwacja')->columns([
+                    TextColumn::make('reservation_date')
+                        ->label('Data rezerwacji')
+                        ->sortable(),
+                    TextColumn::make('hours')->badge()->label('Godziny'),
+                ]),
                 SelectColumn::make('priority')
                     ->label('Priorytet')
                     ->options([
@@ -99,49 +91,62 @@ class IssueAdministrationResource extends Resource
                             ])
                             ->sendToDatabase($record->assignedTo);
                     }),
-                ColumnGroup::make('Status')
-                    ->columns([
-                        ToggleColumn::make('is_approved')
-                            ->label('Zatwierdzone')
-                            ->afterStateUpdated(function ($record, $state) {
-                                if (! $state) {
-                                    return;
-                                }
-                                if ($record->assignedTo) {
-                                    Notification::make()
-                                        ->title('Przypisano nowe zgłoszenie w sali "'.$record->room->name.'"')
-                                        ->body($record->description)
-                                        ->info()
-                                        ->actions([
-                                            Action::make('view')
-                                                ->label('Zobacz')
-                                                ->url(route('filament.admin.resources.issues.view', $record))
-                                                ->button(),
-                                        ])
-                                        ->sendToDatabase($record->assignedTo);
-                                }
+                ColumnGroup::make('Status')->columns([
+                    ToggleColumn::make('is_approved')
+                        ->label('Zatwierdzone')
+                        ->afterStateUpdated(function ($record, $state) {
+                            if (! $state) {
+                                return;
+                            }
+                            if ($record->assignedTo) {
                                 Notification::make()
-                                    ->title('Twoje zgłoszenie w sali "'.$record->room->name.'" zostało zatwierdzone')
+                                    ->title(
+                                        'Przypisano nowe zgłoszenie w sali "'.
+                                            $record->room->name.
+                                            '"'
+                                    )
                                     ->body($record->description)
-                                    ->success()
+                                    ->info()
                                     ->actions([
                                         Action::make('view')
                                             ->label('Zobacz')
-                                            ->url(route('filament.admin.resources.issues.view', $record))
+                                            ->url(
+                                                route(
+                                                    'filament.admin.resources.issues.view',
+                                                    $record
+                                                )
+                                            )
                                             ->button(),
                                     ])
-                                    ->sendToDatabase($record->createdBy);
-                            }),
-                        ToggleColumn::make('is_done')
-                            ->label('Zakończone'),
-                    ]),
+                                    ->sendToDatabase($record->assignedTo);
+                            }
+                            Notification::make()
+                                ->title(
+                                    'Twoje zgłoszenie w sali "'.
+                                        $record->room->name.
+                                        '" zostało zatwierdzone'
+                                )
+                                ->body($record->description)
+                                ->success()
+                                ->actions([
+                                    Action::make('view')
+                                        ->label('Zobacz')
+                                        ->url(
+                                            route(
+                                                'filament.admin.resources.issues.view',
+                                                $record
+                                            )
+                                        )
+                                        ->button(),
+                                ])
+                                ->sendToDatabase($record->createdBy);
+                        }),
+                    ToggleColumn::make('is_done')->label('Zakończone'),
+                ]),
             ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
+            ->filters([TrashedFilter::make()])
             ->actions([
-                Tables\Actions\DeleteAction::make()
-                    ->label('Usuń'),
+                Tables\Actions\DeleteAction::make()->label('Usuń'),
                 Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
@@ -167,9 +172,8 @@ class IssueAdministrationResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        return parent::getEloquentQuery()->withoutGlobalScopes([
+            SoftDeletingScope::class,
+        ]);
     }
 }

@@ -7,6 +7,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,16 +16,25 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    /**
+     * @return HasMany<Issue,User>
+     */
     public function createdIssues()
     {
         return $this->hasMany(Issue::class, 'created_by_id');
     }
 
+    /**
+     * @return HasMany<Issue,User>
+     */
     public function assignedIssues()
     {
         return $this->hasMany(Issue::class, 'assigned_to_id');
     }
 
+    /**
+     * @return HasMany<Student,User>
+     */
     public function students()
     {
         return $this->hasMany(Student::class, 'form_teacher_id');
