@@ -10,7 +10,7 @@ Projekt został napisany w języku PHP, przy użyciu frameworka Laravel oraz bib
 
 Do większości modyfikacji, typu dodawanie nowych tabel czy funkcjonalności wystarczy zapoznać się z dokumentacją [Filament](https://filamentphp.com/). Można też wzorować się na istniejącym kodzie.
 
-Po wprowadzeniu zmian w kodzie, należy wysłać mi pull request. Po zatwierdzeniu wrzucę nowy kod na serwer w szkole.
+Po wprowadzeniu zmian w kodzie, należy wysłać mi pull request. Po zatwierdzeniu automatycznie stworzy się nowy docker image, który wrzucę na serwer w szkole.
 
 ## Początkowa konfiguracja i inicjalizacja
 
