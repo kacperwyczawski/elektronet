@@ -62,7 +62,9 @@ class IssueResource extends Resource
                     ->label('Rezerwacja sali')
                     ->helperText('Zaznacz, jeśli chcesz zarezerwować salę.'),
                 Placeholder::make('Informacje')
-                    ->content('W opisie możesz podać dodatkowe informacje, co należy przygotować w sali, w jakim celu, ile miejsc, itd.')
+                    ->content(
+                        'W opisie możesz podać dodatkowe informacje, co należy przygotować w sali, w jakim celu, ile miejsc, itd.'
+                    )
                     ->hidden(fn (Get $get) => ! $get('is_reservation')),
                 DatePicker::make('reservation_date')
                     ->live()
@@ -93,7 +95,8 @@ class IssueResource extends Resource
                             return [];
                         }
 
-                        $reserved = Issue::query()->whereDate('reservation_date', $date)
+                        $reserved = Issue::query()
+                            ->whereDate('reservation_date', $date)
                             ->where('room_id', $room)
                             ->pluck('hours')
                             ->flatten()
@@ -111,25 +114,21 @@ class IssueResource extends Resource
     {
         return $infolist
             ->schema([
-                IconEntry::make('is_approved')
-                    ->label('Zatwierdzone')
-                    ->boolean(),
                 TextEntry::make('room.name')
                     ->label('Sala'),
                 TextEntry::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn ($state): string => match ($state) {
-                        1 => 'Niski',
-                        2 => 'Normalny',
-                        3 => 'Wysoki',
-                        default => 'Brak',
-                    }),
-                TextEntry::make('assignedTo.full_name')
-                    ->label('Przypisano do'),
-                TextEntry::make('description')
-                    ->label('Opis')
-                    ->columnSpanFull(),
+                    ->formatStateUsing(
+                        fn ($state): string => match ($state) {
+                            1 => 'Niski',
+                            2 => 'Normalny',
+                            3 => 'Wysoki',
+                            default => 'Brak',
+                        }
+                    ),
+                TextEntry::make('assignedTo.full_name')->label('Przypisano do'),
+                TextEntry::make('description')->label('Opis')->columnSpanFull(),
             ])
             ->columns(4);
     }
@@ -138,9 +137,6 @@ class IssueResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('is_approved')
-                    ->label('Zatwierdzone')
-                    ->boolean(),
                 TextColumn::make('room.name')
                     ->label('Sala')
                     ->searchable(),
@@ -152,12 +148,14 @@ class IssueResource extends Resource
                 TextColumn::make('priority')
                     ->label('Priorytet')
                     ->badge()
-                    ->formatStateUsing(fn ($state): string => match ($state) {
-                        1 => 'Niski',
-                        2 => 'Normalny',
-                        3 => 'Wysoki',
-                        default => 'Brak',
-                    })
+                    ->formatStateUsing(
+                        fn ($state): string => match ($state) {
+                            1 => 'Niski',
+                            2 => 'Normalny',
+                            3 => 'Wysoki',
+                            default => 'Brak',
+                        }
+                    )
                     ->sortable(),
                 TextColumn::make('assignedTo.full_name')
                     ->label('Przypisano do')
@@ -171,9 +169,7 @@ class IssueResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
+            ->filters([TrashedFilter::make()])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
@@ -207,9 +203,7 @@ class IssueResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ])
+            ->withoutGlobalScopes([SoftDeletingScope::class])
             ->where('created_by_id', Auth::id());
     }
 }
