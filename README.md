@@ -18,6 +18,10 @@ Po wprowadzeniu zmian w kodzie, należy wysłać mi pull request. Po zatwierdzen
 - Stwórz i zaninicjalizuj bazę danych: `php artisan migrate:fresh --seed` (pojawi się konto `kacwyc` z hasłem `admin`)
 - Ustaw zmienne środowiskowe, tak jak w Dockerfile (np. `APP_LOCALE` na `pl`) (można to zrobić w pliku `.env`)
 
+## Dodatkowe informacje
+
+- jeśli powiadomienia nie działają, można spróbować uruchomić `php artisan queue:work` na serwerze.
+
 ## Kontakt
 
 W pierwszej kolejności, proszę kontaktować się z pracownikami szkoły. Można też zgłosić issue na GitHubie. Ewentualnie można napisać do mnie na adres [elektronet@wyczawski.dev](mailto:elektronet@wyczawski.dev).
