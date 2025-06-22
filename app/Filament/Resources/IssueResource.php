@@ -132,6 +132,7 @@ class IssueResource extends Resource
                     ->hidden(fn ($record) => ! $record->is_reservation),
                 TextEntry::make('hours')
                     ->label('Godziny lekcyjne')
+                    ->badge()
                     ->hidden(fn ($record) => ! $record->is_reservation),
             ])
             ->columns(4);
