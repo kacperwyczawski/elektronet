@@ -19,48 +19,35 @@ class ResultsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('result')
-                    ->required()
-                    ->helperText('Na przykład: laureat, finalista, 1. miejsce')
-                    ->label('Wynik'),
-                Select::make('student_id')
-                    ->label('Uczeń')
-                    ->required()
-                    ->searchable()
-                    ->relationship('student', 'full_name'),
-                DatePicker::make('date')
-                    ->required()
-                    ->label('Data osiągnięcia'),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('result')
+                ->required()
+                ->helperText('Na przykład: laureat, finalista, 1. miejsce')
+                ->label('Wynik'),
+            Select::make('student_id')
+                ->label('Uczeń')
+                ->required()
+                ->searchable()
+                ->relationship('student', 'full_name'),
+            DatePicker::make('date')->required()->label('Data osiągnięcia'),
+        ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('result')
-                    ->label('Wynik'),
-                TextColumn::make('student.first_name')
-                    ->label('Imię'),
-                TextColumn::make('student.last_name')
-                    ->label('Nazwisko'),
-                TextColumn::make('date')
-                    ->label('Data')
-                    ->date(),
-                TextColumn::make('student.class_letter')
-                    ->label('Klasa'),
+                Tables\Columns\TextColumn::make('result')->label('Wynik'),
+                TextColumn::make('student.first_name')->label('Imię'),
+                TextColumn::make('student.last_name')->label('Nazwisko'),
+                TextColumn::make('date')->label('Data')->date(),
+                TextColumn::make('student.class_letter')->label('Klasa'),
             ])
             ->filters([
                 //
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+            ->headerActions([Tables\Actions\CreateAction::make()->modalHeading('Dodaj wynik')])
+            ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

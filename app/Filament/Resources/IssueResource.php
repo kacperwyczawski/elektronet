@@ -183,7 +183,10 @@ class IssueResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
