@@ -112,8 +112,7 @@ class IssueResource extends Resource
     {
         return $infolist
             ->schema([
-                TextEntry::make('room.name')
-                    ->label('Sala'),
+                TextEntry::make('room.name')->label('Sala'),
                 TextEntry::make('priority')
                     ->label('Priorytet')
                     ->badge()
@@ -127,6 +126,13 @@ class IssueResource extends Resource
                     ),
                 TextEntry::make('assignedTo.full_name')->label('Przypisano do'),
                 TextEntry::make('description')->label('Opis')->columnSpanFull(),
+                TextEntry::make('reservation_date')
+                    ->label('Data rezerwacji')
+                    ->date()
+                    ->hidden(fn ($record) => ! $record->is_reservation),
+                TextEntry::make('hours')
+                    ->label('Godziny lekcyjne')
+                    ->hidden(fn ($record) => ! $record->is_reservation),
             ])
             ->columns(4);
     }
@@ -135,9 +141,7 @@ class IssueResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('room.name')
-                    ->label('Sala')
-                    ->searchable(),
+                TextColumn::make('room.name')->label('Sala')->searchable(),
                 TextColumn::make('description')
                     ->label('Opis')
                     ->wrap()
